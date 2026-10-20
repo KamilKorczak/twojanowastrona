@@ -151,7 +151,7 @@ BAZA WIEDZY AGENCJI (PEŁNE 75 PYTAŃ I ODPOWIEDZI):
 
     // Obsługa złapanego leadu
     if (responseMessage.tool_calls) {
-      const toolCall = responseMessage.tool_calls[0];
+      const toolCall = responseMessage.tool_calls[0] as any;
       const args = JSON.parse(toolCall.function.arguments);
 
       console.log("🔥 BOT ZŁAPAŁ LEAD (RESEND):", args);
