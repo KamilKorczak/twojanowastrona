@@ -151,14 +151,15 @@ BAZA WIEDZY AGENCJI (PEŁNE 75 PYTAŃ I ODPOWIEDZI):
 
     // Obsługa złapanego leadu
     if (responseMessage.tool_calls) {
-      const toolCall = responseMessage.tool_calls[0] as any;
+      // @ts-ignore
+      const toolCall = responseMessage.tool_calls[0];
+      // @ts-ignore
       const args = JSON.parse(toolCall.function.arguments);
 
       console.log("🔥 BOT ZŁAPAŁ LEAD (RESEND):", args);
 
       try {
         // Wysyłka maila za pomocą Resend
-        // Uwaga: Zanim dodasz własną domenę w Resend, maile testowe wysyłane są z adresu onboarding@resend.dev
         const { data, error } = await resend.emails.send({
           from: 'Powiadomienia AI <onboarding@resend.dev>',
           to: ['twojanowastrona24@gmail.com'],
@@ -183,6 +184,7 @@ BAZA WIEDZY AGENCJI (PEŁNE 75 PYTAŃ I ODPOWIEDZI):
       messages.push(responseMessage);
       messages.push({
         role: "tool",
+        // @ts-ignore
         tool_call_id: toolCall.id,
         content: "Proces wysyłki zakończony. Podziękuj teraz klientowi za pozostawienie kontaktu i poinformuj, że zespół wkrótce się z nim skontaktuje."
       });
