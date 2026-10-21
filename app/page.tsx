@@ -224,21 +224,24 @@ export default function Home() {
           </Reveal>
           
           <Reveal delay={150}>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight mb-8 text-white drop-shadow-lg cursor-default flex flex-col items-center justify-center gap-1">
-              {/* Ukryte na telefonach, widoczne na desktopie */}
-              <div className="hidden sm:block">
+            <h1 className="text-3xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight mb-8 text-white drop-shadow-lg cursor-default">
+              
+              {/* WERSJA NA KOMPUTER (z efektem najazdu myszką) */}
+              <div className="hidden sm:flex flex-col items-center justify-center">
                 <HoverLetters text="Zamień odwiedzających w" />
-              </div>
-              {/* Widoczne tylko na telefonach, aby inteligentnie złamać linię i unikać samotnego "w" */}
-              <div className="sm:hidden block">
-                <HoverLetters text="Zamień odwiedzających" />
-              </div>
-              <div className="mt-2 flex items-center justify-center flex-wrap text-center gap-x-2">
-                <span className="sm:hidden text-white font-bold tracking-tight inline-block mb-1">w</span>
-                <span className="text-blue-400 p-2 hover:text-blue-300 transition-all duration-300 hover:scale-105 inline-block">
+                <div className="mt-2 text-blue-400 p-2 hover:text-blue-300 transition-all duration-300 hover:scale-105">
                   prawdziwych klientów.
+                </div>
+              </div>
+
+              {/* WERSJA NA TELEFON (czysty, wyśrodkowany tekst w 2 linijkach) */}
+              <div className="sm:hidden flex flex-col items-center justify-center px-2 text-center">
+                <span className="block mb-1">Zamień odwiedzających</span>
+                <span className="block">
+                  w <span className="text-blue-400">prawdziwych klientów.</span>
                 </span>
               </div>
+
             </h1>
           </Reveal>
 
