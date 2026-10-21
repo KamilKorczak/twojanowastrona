@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-// --- SILNIK ANIMACJI SEKCJI (Przyspieszony do 700ms) ---
+// --- SILNIK ANIMACJI SEKCJI ---
 const Reveal = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
@@ -52,7 +52,7 @@ const HoverLetters = ({ text, className = "" }: { text: string, className?: stri
   );
 };
 
-// --- EFEKT PISANIA NA MASZYNIE (Przyspieszony) ---
+// --- EFEKT PISANIA NA MASZYNIE ---
 const TypewriterEffect = ({ words }: { words: string[] }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
@@ -129,11 +129,12 @@ export default function Home() {
     return () => { document.body.style.overflow = "auto"; };
   }, [isFormOpen]);
 
+  // ZAKTUALIZOWANE PORTFOLIO (Zgodne z designem zakładki)
   const portfolioItems = [
-    { title: "Architektura i Wnętrza", desc: "Minimalistyczny design skupiony na portfolio projektów.", type: "Wizytówka Premium", image: "/mockup-architektura.jpg" },
-    { title: "Firma Budowlana", desc: "Solidna strona firmowa z pełną ofertą usług i galerią.", type: "Strona Firmowa", image: "/mockup-budowlana.jpg" },
-    { title: "Klinika / Salon Urody", desc: "Elegancka witryna z miejscem na integrację kalendarza wizyt.", type: "Strona + Rezerwacje", image: "/mockup-uroda.jpg" },
-    { title: "Biuro Rachunkowe", desc: "Klasyczna, przejrzysta budowa budząca zaufanie w biznesie.", type: "Strona Firmowa", image: "/mockup-ksiegowosc.jpg" }
+    { category: "AGENCJA & BIZNES B2B", image: "/mockup-8.jpg" },
+    { category: "MOTORYZACJA & SERWIS", image: "/mockup-6.jpg" },
+    { category: "ARCHITEKTURA WNĘTRZ", image: "/mockup-5.jpg" },
+    { category: "FOTOGRAFIA", image: "/mockup-7.jpg" }
   ];
 
   const faqs = [
@@ -206,6 +207,7 @@ export default function Home() {
 
   return (
     <>
+      {/* 1. HERO SECTION */}
       <section className="relative pt-28 pb-24 text-center flex flex-col items-center justify-center min-h-[90vh] overflow-hidden px-4">
         <div 
           className="absolute inset-0 z-0 opacity-20 bg-cover bg-center"
@@ -222,11 +224,21 @@ export default function Home() {
           </Reveal>
           
           <Reveal delay={150}>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight mb-8 text-white drop-shadow-lg cursor-default flex flex-col items-center justify-center gap-2">
-              <span className="break-words">Zamień odwiedzających w</span>
-              <span className="text-blue-400 p-2 hover:text-blue-300 transition-all duration-300 hover:scale-105 inline-block">
-                prawdziwych klientów.
-              </span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight mb-8 text-white drop-shadow-lg cursor-default flex flex-col items-center justify-center gap-1">
+              {/* Ukryte na telefonach, widoczne na desktopie */}
+              <div className="hidden sm:block">
+                <HoverLetters text="Zamień odwiedzających w" />
+              </div>
+              {/* Widoczne tylko na telefonach, aby inteligentnie złamać linię i unikać samotnego "w" */}
+              <div className="sm:hidden block">
+                <HoverLetters text="Zamień odwiedzających" />
+              </div>
+              <div className="mt-2 flex items-center justify-center flex-wrap text-center gap-x-2">
+                <span className="sm:hidden text-white font-bold tracking-tight inline-block mb-1">w</span>
+                <span className="text-blue-400 p-2 hover:text-blue-300 transition-all duration-300 hover:scale-105 inline-block">
+                  prawdziwych klientów.
+                </span>
+              </div>
             </h1>
           </Reveal>
 
@@ -262,13 +274,14 @@ export default function Home() {
                 <span className="text-blue-500 font-bold">✓</span> Ultraszybkie serwery
               </span>
               <span className="bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-full flex items-center gap-2">
-                <span className="text-blue-500 font-bold">✓</span> Jasne zasady
+                <span className="text-blue-500 font-bold">✓</span> Przejrzysta umowa
               </span>
             </div>
           </Reveal>
         </div>
       </section>
 
+      {/* 2. DARMOWY AUDYT */}
       <section className="py-12 bg-gradient-to-r from-[#0B0F19] via-blue-900/20 to-[#0B0F19] border-b border-blue-500/20">
         <Reveal delay={0}>
           <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 cursor-default text-center md:text-left">
@@ -276,7 +289,7 @@ export default function Home() {
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 leading-tight">
                 Dlaczego Twoja strona <TypewriterEffect words={["nie sprzedaje?", "jest wolna?", "nie pokazuje się w Google?", "wygląda staro?"]} />
               </h2>
-              <p className="text-slate-400 text-sm mt-3">Prześlij nam link do swojej obecnej witryny. Prześwietlimy ją całkowicie za darmo i wskażemy główne błędy, które blokują Twoją sprzedaż w sieci.</p>
+              <p className="text-slate-400 text-sm mt-2">Prześlij nam link do swojej obecnej witryny. Prześwietlimy ją całkowicie za darmo i wskażemy główne błędy, które blokują Twoją sprzedaż w sieci.</p>
             </div>
             <div className="shrink-0 w-full md:w-auto">
               <Link href="/audyt" className="block w-full md:w-auto px-8 py-3.5 bg-white text-blue-900 font-bold rounded-xl hover:bg-slate-200 transition-colors shadow-lg text-center hover:-translate-y-1 duration-300">
@@ -287,6 +300,7 @@ export default function Home() {
         </Reveal>
       </section>
 
+      {/* 3. PROCES WSPÓŁPRACY */}
       <section className="px-6 py-24 bg-[#0E131F] border-b border-slate-800/50">
         <div className="max-w-6xl mx-auto">
           <Reveal delay={0}>
@@ -300,28 +314,28 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <Reveal delay={100}>
-              <div className="relative p-6 bg-slate-900/50 rounded-2xl border border-slate-800 h-full group hover:border-slate-600 transition-colors animate-float" style={{ animationDelay: '0s' }}>
+              <div className="relative p-6 bg-slate-900/50 rounded-2xl border border-slate-800 h-full group hover:border-slate-600 transition-colors">
                 <div className="text-slate-600 text-3xl font-bold mb-4 opacity-50 group-hover:opacity-100 group-hover:-translate-y-1 transition-all">01</div>
                 <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Wstępna konsultacja</h3>
                 <p className="text-sm text-slate-400 leading-relaxed">Rozpoczynamy od analizy potrzeb biznesowych oraz określenia głównych celów nowej witryny.</p>
               </div>
             </Reveal>
             <Reveal delay={200}>
-              <div className="relative p-6 bg-slate-900/50 rounded-2xl border border-slate-800 h-full group hover:border-slate-600 transition-colors animate-float" style={{ animationDelay: '0.5s' }}>
+              <div className="relative p-6 bg-slate-900/50 rounded-2xl border border-slate-800 h-full group hover:border-slate-600 transition-colors">
                 <div className="text-slate-600 text-3xl font-bold mb-4 opacity-50 group-hover:opacity-100 group-hover:-translate-y-1 transition-all">02</div>
                 <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Wstępny projekt strony</h3>
                 <p className="text-sm text-slate-400 leading-relaxed">Przygotowujemy dla Ciebie bezpłatny szkic koncepcyjny. Oceniasz go bez żadnego ryzyka.</p>
               </div>
             </Reveal>
             <Reveal delay={300}>
-              <div className="relative p-6 bg-slate-900/50 rounded-2xl border border-slate-800 h-full group hover:border-slate-600 transition-colors animate-float" style={{ animationDelay: '1s' }}>
+              <div className="relative p-6 bg-slate-900/50 rounded-2xl border border-slate-800 h-full group hover:border-slate-600 transition-colors">
                 <div className="text-slate-600 text-3xl font-bold mb-4 opacity-50 group-hover:opacity-100 group-hover:-translate-y-1 transition-all">03</div>
                 <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Umowa i formalności</h3>
                 <p className="text-sm text-slate-400 leading-relaxed">Po akceptacji ustalamy detale, podpisujemy prostą umowę, pobieramy zaliczkę i kodujemy.</p>
               </div>
             </Reveal>
             <Reveal delay={400}>
-              <div className="relative p-6 bg-slate-900/50 rounded-2xl border border-slate-800 h-full group hover:border-slate-600 transition-colors animate-float" style={{ animationDelay: '1.5s' }}>
+              <div className="relative p-6 bg-slate-900/50 rounded-2xl border border-slate-800 h-full group hover:border-slate-600 transition-colors">
                 <div className="text-slate-600 text-3xl font-bold mb-4 opacity-50 group-hover:opacity-100 group-hover:-translate-y-1 transition-all">04</div>
                 <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Testy i wdrożenie</h3>
                 <p className="text-sm text-slate-400 leading-relaxed">Gotowy projekt ląduje na serwerze testowym. Po akceptacji całości uruchamiamy witrynę.</p>
@@ -331,6 +345,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 4. PORÓWNANIE */}
       <section className="px-6 py-24 bg-[#0B0F19] relative z-10 border-b border-slate-800/50">
         <div className="max-w-6xl mx-auto">
           <Reveal delay={0}>
@@ -417,6 +432,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 5. PORTFOLIO - PRZEBUDOWANE W STYLU "OKNO PRZEGLĄDARKI" */}
       <section className="py-24 border-b border-slate-800/50 bg-[#0B0F19]">
         <div className="max-w-6xl mx-auto px-6">
           <Reveal delay={0}>
@@ -428,18 +444,39 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {portfolioItems.map((item, idx) => (
-              <Reveal delay={idx * 150} key={idx}>
-                <div className="group rounded-2xl bg-slate-900/50 border border-slate-800 overflow-hidden hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] transition-all duration-500 cursor-pointer flex flex-col h-full">
-                  <div className="aspect-[4/3] w-full overflow-hidden relative bg-slate-800 border-b border-slate-800">
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition duration-700 ease-out" />
-                    <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/10 transition-colors duration-500"></div>
+              <Reveal delay={idx * 150} key={idx} className="h-full">
+                <div className="group bg-gradient-to-br from-slate-900 to-[#0B0F19] border border-slate-800 rounded-3xl overflow-hidden hover:border-blue-500/50 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] transition-all duration-500 flex flex-col h-full">
+                  
+                  {/* Górna belka symulująca okno przeglądarki */}
+                  <div className="h-10 bg-slate-950 flex items-center px-5 gap-2.5 border-b border-slate-800 shrink-0">
+                    <div className="w-3 h-3 rounded-full bg-slate-700 group-hover:bg-red-500/80 transition-colors duration-300"></div>
+                    <div className="w-3 h-3 rounded-full bg-slate-700 group-hover:bg-yellow-500/80 transition-colors duration-300"></div>
+                    <div className="w-3 h-3 rounded-full bg-slate-700 group-hover:bg-green-500/80 transition-colors duration-300"></div>
                   </div>
-                  <div className="p-8 flex-grow">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-blue-500 mb-3 inline-block group-hover:-translate-y-1 transition-transform">{item.type}</span>
-                    <h3 className="text-xl font-bold mb-3 text-white group-hover:text-blue-100 transition-colors">{item.title}</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                  
+                  {/* Zdjęcie w całości widoczne (object-contain i aspect-video) na ciemnym tle */}
+                  <div className="w-full aspect-video relative bg-slate-950 flex items-center justify-center p-2">
+                    <img 
+                      src={item.image} 
+                      alt={item.category} 
+                      className="w-full h-full object-contain opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700 ease-out rounded-xl" 
+                    />
+                    {/* Overlay z przyciskiem do kontaktu */}
+                    <div className="absolute inset-0 bg-[#0B0F19]/0 group-hover:bg-[#0B0F19]/70 backdrop-blur-[2px] transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100 rounded-xl m-2">
+                      <Link href="/kontakt" className="translate-y-4 group-hover:translate-y-0 px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all duration-500 shadow-[0_0_20px_rgba(59,130,246,0.5)] flex items-center gap-2">
+                        Zamów podobną stronę
+                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Wyśrodkowana Kategoria (tylko jeden element tekstowy na dole) */}
+                  <div className="p-6 flex-grow flex items-center justify-center bg-gradient-to-br from-slate-900 to-[#0B0F19] border-t border-slate-800">
+                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-300 group-hover:text-blue-400 transition-colors text-center m-0">
+                      {item.category}
+                    </h3>
                   </div>
                 </div>
               </Reveal>
@@ -456,6 +493,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 6. OPINIE */}
       <section className="py-24 bg-[#0E131F] border-b border-slate-800/50">
         <div className="max-w-6xl mx-auto px-6 mb-12 cursor-default">
           <Reveal delay={0}>
@@ -472,7 +510,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-500">
               {testimonials.slice(currentTestimonialIndex * itemsPerPage, (currentTestimonialIndex + 1) * itemsPerPage).map((testi, idx) => (
-                <div key={idx} className="p-8 rounded-3xl bg-slate-900 border border-slate-800 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 flex flex-col h-full animate-fadeIn">
+                <div key={idx} className="p-8 rounded-3xl bg-slate-900 border border-slate-800 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
                   <div className="flex gap-1 mb-6">
                     {[...Array(5)].map((_, i) => (
                       <svg key={i} className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
@@ -521,6 +559,7 @@ export default function Home() {
         </Reveal>
       </section>
 
+      {/* 7. FAQ */}
       <section className="px-6 py-24 bg-[#0B0F19] border-b border-slate-800/50">
         <div className="max-w-3xl mx-auto">
           <Reveal delay={0}>
@@ -553,6 +592,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 8. WYSKAKUJĄCY FORMULARZ (MODAL) */}
       {isFormOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-[#020617]/90 backdrop-blur-sm animate-fadeIn">
           <div className="absolute inset-0 cursor-pointer" onClick={() => setIsFormOpen(false)}></div>
