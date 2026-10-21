@@ -68,10 +68,11 @@ const InfoTooltip = ({ title, description }: { title: string, description: strin
         ?
       </button>
       {isOpen && (
-        <div className="absolute z-50 bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-xl shadow-2xl text-left leading-relaxed">
+        <div className="absolute z-50 bottom-full right-0 sm:right-auto sm:left-1/2 transform sm:-translate-x-1/2 mb-2 w-60 sm:w-64 p-3 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-xl shadow-2xl text-left leading-relaxed">
           <strong className="block text-white mb-1">{title}</strong>
           {description}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
+          {/* Trójkącik dopasowujący się do pozycji */}
+          <div className="absolute top-full right-[6px] sm:right-auto sm:left-1/2 transform sm:-translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
         </div>
       )}
     </div>
@@ -174,7 +175,6 @@ export default function Cennik() {
       Pakiet główny: ${packageName}
       Opieka techniczna: ${maintenanceName}
       Wybrane dodatki: ${selectedAddonsList.length > 0 ? selectedAddonsList.join(", ") : "Brak"}
-      
       Zniżka: ${discountPercent * 100}%
       Kwota wdrożenia po rabacie: ${finalOneTime} zł
       Stały abonament miesięczny: ${maintenancePrice} zł / mc
@@ -353,7 +353,7 @@ export default function Cennik() {
                           {addons.googleMaps && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Dominacja Wizytówki Google</h4>
-                        <InfoTooltip title="Google Maps" description="Tworzymy, weryfikujemy i pozycjonujemy Twój profil tak, by wyświetlał się lokalnie w TOP3 i generował darmowe telefony." />
+                        <InfoTooltip title="Google Maps" description="Tworzymy, weryfikujemy i pozycjonujemy Twój profil tak, by wyświetlał się lokalnie i generował darmowe telefony." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -385,7 +385,7 @@ export default function Cennik() {
                           {addons.aiBot && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Wirtualny Asystent AI</h4>
-                        <InfoTooltip title="Bot na sterydach" description="Prywatny sprzedawca na Twojej stronie. Uczymy go cennika i 15 najczęstszych pytań (FAQ). Zbierze kontakty od klientów w środku nocy." />
+                        <InfoTooltip title="Bot na sterydach" description="Prywatny sprzedawca na Twojej stronie. Uczymy go cennika i 50 najczęstszych pytań (FAQ). Zbierze kontakty od klientów w środku nocy." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -531,7 +531,7 @@ export default function Cennik() {
                       <li className="flex gap-2"><span className="text-blue-500">✓</span> <strong>Hosting, Domena, SSL w cenie</strong></li>
                       <li className="flex gap-2"><span className="text-blue-500">✓</span> Kopie zapasowe kodu (GitHub)</li>
                       <li className="flex gap-2"><span className="text-blue-500">✓</span> Monitoring dostępności 24/7</li>
-                      <li className="flex gap-2"><span className="text-blue-500">✓</span> <strong>Do 1 godz.</strong> drobnych zmian w miesiącu</li>
+                      <li className="flex gap-2"><span className="text-blue-500">✓</span> <strong className="whitespace-nowrap">Do 1 godz.</strong> drobnych zmian w miesiącu</li>
                     </ul>
                     <div className="text-xl font-bold text-blue-400">199 zł / mc</div>
                     <p className="text-[10px] text-slate-500 mt-2">Jedna faktura, całkowity święty spokój.</p>
@@ -546,7 +546,7 @@ export default function Cennik() {
                     </div>
                     <ul className="space-y-2 text-xs text-slate-300 mb-6">
                       <li className="flex gap-2"><span className="text-blue-400">✓</span> Wszystko to, co w pakiecie Standard</li>
-                      <li className="flex gap-2"><span className="text-blue-400">✓</span> <strong>Do 2 godz.</strong> poważniejszych prac na stronie</li>
+                      <li className="flex gap-2"><span className="text-blue-400">✓</span> <strong className="whitespace-nowrap">Do 2 godz.</strong> poważniejszych prac na stronie</li>
                       <li className="flex gap-2"><span className="text-blue-400">✓</span> Gwarancja reakcji na zgłoszenie w 24h</li>
                       <li className="flex gap-2"><span className="text-blue-400">✓</span> Indywidualne raporty kwartalne</li>
                     </ul>
@@ -600,8 +600,17 @@ export default function Cennik() {
       <section className="px-6 py-24 max-w-6xl mx-auto relative z-10 w-full mt-8 border-t border-slate-800/50">
         <Reveal delay={0}>
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-white flex justify-center flex-wrap">
-               <HoverLetters text="W jakiej kolejności inwestować budżet?" />
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-white text-center cursor-default">
+              {/* WERSJA NA KOMPUTERY (animowane litery) */}
+              <span className="hidden sm:block">
+                <HoverLetters text="W jakiej kolejności inwestować budżet?" />
+              </span>
+              
+              {/* WERSJA NA TELEFONY (czysty tekst, elegancko złamany) */}
+              <span className="sm:hidden block leading-tight">
+                W jakiej kolejności<br className="mb-1" />
+                <span className="text-blue-400">inwestować budżet?</span>
+              </span>
             </h2>
             <p className="text-slate-400 text-center max-w-2xl mx-auto leading-relaxed">
               Zastanawiasz się, od czego zacząć? Zobacz sprawdzony, 4-etapowy model inwestycji, który wdrażamy u naszych najbardziej rentownych klientów. Budujemy biznes, krok po kroku.
@@ -728,7 +737,7 @@ export default function Cennik() {
         </div>
       )}
 
-      {/* Wszystkie definicje CSS (bez zmian) */}
+      {/* Wszystkie definicje CSS */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes float {
           0% { transform: translateY(0px); }

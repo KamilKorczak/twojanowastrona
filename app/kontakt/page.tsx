@@ -141,21 +141,30 @@ export default function Kontakt() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <div>
+                  <div className="overflow-hidden">
                     <div className="text-sm font-medium uppercase tracking-wider text-slate-500 mb-1">Napisz e-mail</div>
-                    <a href="mailto:twojanowastrona24@gmail.com" className="text-xl font-bold text-white hover:text-blue-400 transition-colors break-all">twojanowastrona24@gmail.com</a>
+                    <a href="mailto:twojanowastrona24@gmail.com" className="text-base sm:text-xl font-bold text-white hover:text-blue-400 transition-colors break-words">twojanowastrona24@gmail.com</a>
                   </div>
                 </div>
 
                 <div className="pt-8 border-t border-slate-800/50 mt-10">
-                  <div className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">Znajdziesz mnie również tutaj:</div>
-                  <div className="flex gap-4">
-                    {/* Przyciski Social Media (zostawione jako "placeholdery" na przyszłość, w stylu premium) */}
+                  <div className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">Znajdziesz nas również tutaj:</div>
+                  <div className="flex flex-wrap gap-4">
+                    {/* Przyciski Social Media */}
                     <a href="#" className="w-12 h-12 bg-slate-900 border border-slate-700 hover:border-blue-500 hover:bg-blue-600/10 transition-all duration-300 rounded-full flex items-center justify-center text-slate-400 hover:text-blue-400 group" title="Facebook">
                       <span className="text-xs font-bold group-hover:scale-110 transition-transform">FB</span>
                     </a>
                     <a href="#" className="w-12 h-12 bg-slate-900 border border-slate-700 hover:border-blue-500 hover:bg-blue-600/10 transition-all duration-300 rounded-full flex items-center justify-center text-slate-400 hover:text-blue-400 group" title="Instagram">
                       <span className="text-xs font-bold group-hover:scale-110 transition-transform">IG</span>
+                    </a>
+                    <a href="#" className="w-12 h-12 bg-slate-900 border border-slate-700 hover:border-white hover:bg-slate-800 transition-all duration-300 rounded-full flex items-center justify-center text-slate-400 hover:text-white group" title="TikTok">
+                      <span className="text-xs font-bold group-hover:scale-110 transition-transform">TT</span>
+                    </a>
+                    <a href="#" className="w-12 h-12 bg-slate-900 border border-slate-700 hover:border-green-500 hover:bg-green-500/10 transition-all duration-300 rounded-full flex items-center justify-center text-slate-400 hover:text-green-500 group" title="WhatsApp">
+                      <span className="text-xs font-bold group-hover:scale-110 transition-transform">WA</span>
+                    </a>
+                    <a href="#" className="w-12 h-12 bg-slate-900 border border-slate-700 hover:border-blue-400 hover:bg-blue-400/10 transition-all duration-300 rounded-full flex items-center justify-center text-slate-400 hover:text-blue-400 group" title="LinkedIn">
+                      <span className="text-xs font-bold group-hover:scale-110 transition-transform">IN</span>
                     </a>
                   </div>
                 </div>
@@ -181,7 +190,7 @@ export default function Kontakt() {
                       required 
                       value={formData.name} 
                       onChange={(e) => setFormData({...formData, name: e.target.value})} 
-                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm" 
+                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base sm:text-sm" 
                       placeholder="Jan Kowalski" 
                     />
                   </div>
@@ -193,7 +202,7 @@ export default function Kontakt() {
                       required 
                       value={formData.phone} 
                       onChange={(e) => setFormData({...formData, phone: e.target.value})} 
-                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm" 
+                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base sm:text-sm" 
                       placeholder="+48 000 000 000" 
                     />
                   </div>
@@ -205,7 +214,7 @@ export default function Kontakt() {
                     name="preferowana_godzina"
                     value={formData.time} 
                     onChange={(e) => setFormData({...formData, time: e.target.value})} 
-                    className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm cursor-pointer appearance-none"
+                    className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base sm:text-sm cursor-pointer appearance-none"
                   >
                     <option value="Jak najszybciej">Jak najszybciej</option>
                     <option value="Rano (8:00 - 12:00)">Rano (8:00 - 12:00)</option>
@@ -221,7 +230,7 @@ export default function Kontakt() {
                     rows={4} 
                     value={formData.message} 
                     onChange={(e) => setFormData({...formData, message: e.target.value})} 
-                    className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm resize-none" 
+                    className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base sm:text-sm resize-none" 
                     placeholder="Np. potrzebuję nowej strony dla mechanika z systemem rezerwacji..." 
                   />
                 </div>

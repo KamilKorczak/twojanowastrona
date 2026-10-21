@@ -148,7 +148,7 @@ export default function ChatWidget() {
           </div>
 
           <form onSubmit={handleSendMessage} style={{ padding: "12px", backgroundColor: "#0f172a", borderTop: "1px solid #1e293b", display: "flex", gap: "8px" }}>
-            <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Napisz wiadomość..." maxLength={400} style={{ flex: 1, backgroundColor: "#020617", border: "1px solid #1e293b", borderRadius: "12px", padding: "10px 14px", color: "#ffffff", fontSize: "13px", outline: "none" }} />
+            <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Napisz wiadomość..." maxLength={400} style={{ flex: 1, backgroundColor: "#020617", border: "1px solid #1e293b", borderRadius: "12px", padding: "10px 14px", color: "#ffffff", fontSize: "16px", outline: "none" }} />
             <button type="submit" disabled={isLoading || !input.trim()} style={{ backgroundColor: "#2563eb", color: "#ffffff", border: "none", borderRadius: "12px", padding: "0 16px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", opacity: isLoading || !input.trim() ? 0.5 : 1 }}>
               <svg style={{ width: "16px", height: "16px", transform: "rotate(90deg)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

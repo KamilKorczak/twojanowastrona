@@ -83,8 +83,8 @@ const TypewriterEffect = ({ words }: { words: string[] }) => {
 export default function Audyt() {
   const [formData, setFormData] = useState({ 
     url: "", 
-    problem: "", 
-    contactPreference: "email", // domyślny wybór preferencji
+    problems: [] as string[], // Zmieniono na tablicę, aby obsługiwać wielokrotny wybór
+    contactPreference: "email",
     email: "", 
     phone: "" 
   });
@@ -106,6 +106,10 @@ export default function Audyt() {
     const formDataObj = new FormData(e.currentTarget);
     formDataObj.append("access_key", "e44f0f1b-bc96-41d4-9a5b-e08af7ec7f0f");
     formDataObj.append("temat", "Nowe zlecenie darmowego audytu z twojanowastrona.pl");
+    
+    // Zbieramy wszystkie zaznaczone problemy w jeden czytelny ciąg tekstowy dla maila
+    formDataObj.delete("glowny_problem"); // Usuwamy domyślne zachowanie formularza HTML
+    formDataObj.append("Zgłoszone problemy", formData.problems.length > 0 ? formData.problems.join(", ") : "Brak zaznaczonych");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -117,7 +121,7 @@ export default function Audyt() {
 
       if (data.success) {
         setStatus("Analiza zlecona! Skontaktujemy się z Tobą najszybciej jak to możliwe.");
-        setFormData({ url: "", problem: "", contactPreference: "email", email: "", phone: "" });
+        setFormData({ url: "", problems: [], contactPreference: "email", email: "", phone: "" });
         (e.target as HTMLFormElement).reset();
       } else {
         setStatus("Wystąpił błąd podczas wysyłania. Spróbuj ponownie za chwilę.");
@@ -147,8 +151,13 @@ export default function Audyt() {
           </div>
           
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6 text-white drop-shadow-lg flex flex-col items-center justify-center">
-            <div>
+            {/* Wersja Desktop (animowane litery) */}
+            <div className="hidden sm:block">
               <HoverLetters text="Dlaczego Twoja strona" />
+            </div>
+            {/* Wersja Mobile (czysty, wyśrodkowany tekst chroniący przed cięciem słów) */}
+            <div className="sm:hidden block text-center leading-tight">
+              Dlaczego Twoja strona
             </div>
             <div className="mt-2">
               <TypewriterEffect words={[
@@ -185,17 +194,20 @@ export default function Audyt() {
                   required 
                   value={formData.url} 
                   onChange={(e) => setFormData({...formData, url: e.target.value})} 
-                  className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm" 
+                  className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base sm:text-sm" 
                   placeholder="np. https://mojastrona.pl" 
                 />
               </div>
 
-              {/* Krok 2 */}
+              {/* Krok 2 (Checkboxy do wyboru wielu opcji) */}
               <div className="pt-8 border-t border-slate-800/50">
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-3">
-                  <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm shadow-lg shadow-blue-600/30">2</span>
-                  Z czym jest największy problem?
-                </h3>
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-white flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm shadow-lg shadow-blue-600/30">2</span>
+                    Z czym jest największy problem?
+                  </h3>
+                  <p className="text-slate-400 text-xs mt-2 ml-11">Możesz zaznaczyć więcej niż jedną odpowiedź.</p>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     "Strona wygląda na przestarzałą",
@@ -203,23 +215,34 @@ export default function Audyt() {
                     "Nie mam z niej zapytań i telefonów",
                     "Nie wyświetla się poprawnie na komórce",
                     "Nie ma jej w Google",
-                    "Inny problem / Nie wiem"
-                  ].map((prob, idx) => (
-                    <label key={idx} className={`cursor-pointer px-4 py-3.5 rounded-xl border transition-all text-sm flex items-center gap-3 ${formData.problem === prob ? "bg-blue-600/20 border-blue-500 text-white" : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-600"}`}>
-                      <input 
-                        type="radio" 
-                        name="glowny_problem" 
-                        value={prob} 
-                        checked={formData.problem === prob} 
-                        onChange={(e) => setFormData({...formData, problem: e.target.value})} 
-                        className="hidden" 
-                      />
-                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${formData.problem === prob ? "border-blue-500" : "border-slate-600"}`}>
-                        {formData.problem === prob && <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>}
-                      </div>
-                      {prob}
-                    </label>
-                  ))}
+                    "Inny problem",
+                    "Nie wiem"
+                  ].map((prob, idx) => {
+                    const isSelected = formData.problems.includes(prob);
+                    return (
+                      <label key={idx} className={`cursor-pointer px-4 py-3.5 rounded-xl border transition-all text-sm flex items-center gap-3 ${isSelected ? "bg-blue-600/20 border-blue-500 text-white" : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-600"}`}>
+                        <input 
+                          type="checkbox" 
+                          name="glowny_problem" 
+                          value={prob} 
+                          checked={isSelected} 
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setFormData({...formData, problems: [...formData.problems, prob]});
+                            } else {
+                              setFormData({...formData, problems: formData.problems.filter(p => p !== prob)});
+                            }
+                          }} 
+                          className="hidden" 
+                        />
+                        {/* Zmieniony wygląd na kwadratowy checkbox */}
+                        <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${isSelected ? "border-blue-500 bg-blue-500" : "border-slate-600 bg-slate-900"}`}>
+                          {isSelected && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
+                        </div>
+                        {prob}
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -230,7 +253,6 @@ export default function Audyt() {
                   Gdzie przesłać wyniki audytu?
                 </h3>
                 
-                {/* Oba pola widoczne cały czas */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
                   <div>
                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Twój E-mail</label>
@@ -240,7 +262,7 @@ export default function Audyt() {
                       required={formData.contactPreference === "email"} 
                       value={formData.email} 
                       onChange={(e) => setFormData({...formData, email: e.target.value})} 
-                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm" 
+                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base sm:text-sm" 
                       placeholder="kontakt@firma.pl" 
                     />
                   </div>
@@ -252,13 +274,12 @@ export default function Audyt() {
                       required={formData.contactPreference === "phone"} 
                       value={formData.phone} 
                       onChange={(e) => setFormData({...formData, phone: e.target.value})} 
-                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm" 
+                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base sm:text-sm" 
                       placeholder="+48 000 000 000" 
                     />
                   </div>
                 </div>
 
-                {/* Wybór preferencji kontaktu (wyraźne przyciski) */}
                 <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800">
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4 text-center sm:text-left">
                     W jaki sposób wolisz otrzymać wyniki? Zaznacz preferowaną formę:
@@ -276,7 +297,7 @@ export default function Audyt() {
                       <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${formData.contactPreference === 'email' ? "border-blue-500" : "border-slate-600"}`}>
                         {formData.contactPreference === 'email' && <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>}
                       </div>
-                      Wybieram kontakt E-mail
+                      Chcę kontakt E-mail
                     </label>
                     <label className={`cursor-pointer flex-1 py-3 px-4 rounded-xl border text-center font-medium text-sm transition-all flex items-center justify-center gap-3 ${formData.contactPreference === 'phone' ? "bg-blue-600/20 border-blue-500 text-white" : "bg-[#0B0F19] border-slate-700 text-slate-500 hover:border-slate-500"}`}>
                       <input 
@@ -290,7 +311,7 @@ export default function Audyt() {
                       <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${formData.contactPreference === 'phone' ? "border-blue-500" : "border-slate-600"}`}>
                         {formData.contactPreference === 'phone' && <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>}
                       </div>
-                      Wybieram kontakt Telefoniczny
+                      Chcę kontakt Telefoniczny
                     </label>
                   </div>
                 </div>
