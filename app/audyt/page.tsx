@@ -153,7 +153,7 @@ export default function Audyt() {
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6 text-white drop-shadow-lg flex flex-col items-center justify-center">
             {/* Wersja Desktop (animowane litery) */}
             <div className="hidden sm:block">
-              <HoverLetters text="Dlaczego Twoja strona" />
+              <HoverLetters text="Dlaczego twoja strona" />
             </div>
             {/* Wersja Mobile (czysty, wyśrodkowany tekst chroniący przed cięciem słów) */}
             <div className="sm:hidden block text-center leading-tight">
@@ -297,7 +297,7 @@ export default function Audyt() {
                       <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${formData.contactPreference === 'email' ? "border-blue-500" : "border-slate-600"}`}>
                         {formData.contactPreference === 'email' && <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>}
                       </div>
-                      Chcę kontakt E-mail
+                      Wybieram kontakt E-mail
                     </label>
                     <label className={`cursor-pointer flex-1 py-3 px-4 rounded-xl border text-center font-medium text-sm transition-all flex items-center justify-center gap-3 ${formData.contactPreference === 'phone' ? "bg-blue-600/20 border-blue-500 text-white" : "bg-[#0B0F19] border-slate-700 text-slate-500 hover:border-slate-500"}`}>
                       <input 
@@ -311,7 +311,7 @@ export default function Audyt() {
                       <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${formData.contactPreference === 'phone' ? "border-blue-500" : "border-slate-600"}`}>
                         {formData.contactPreference === 'phone' && <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>}
                       </div>
-                      Chcę kontakt Telefoniczny
+                      Wybieram kontakt Telefoniczny
                     </label>
                   </div>
                 </div>

@@ -52,10 +52,22 @@ const HoverLetters = ({ text, className = "" }: { text: string, className?: stri
   );
 };
 
-// --- KOMPONENT OPISU (TOOLTIP) ---
-const InfoTooltip = ({ title, description }: { title: string, description: string }) => {
+// --- INTELIGENTNY KOMPONENT OPISU (TOOLTIP) ---
+const InfoTooltip = ({ title, description, align = "center" }: { title: string, description: string, align?: "left" | "center" | "right" }) => {
   const [isOpen, setIsOpen] = useState(false);
   
+  // Logika dopasowująca stronę otwierania się dymka na telefonach
+  let positionClass = "left-1/2 -translate-x-1/2";
+  let triangleClass = "left-1/2 -translate-x-1/2";
+  
+  if (align === "left") {
+    positionClass = "left-[-10px] sm:left-1/2 sm:-translate-x-1/2";
+    triangleClass = "left-[18px] sm:left-1/2 sm:-translate-x-1/2";
+  } else if (align === "right") {
+    positionClass = "right-[-10px] sm:right-auto sm:left-1/2 sm:-translate-x-1/2";
+    triangleClass = "right-[18px] sm:right-auto sm:left-1/2 sm:-translate-x-1/2";
+  }
+
   return (
     <div className="relative inline-block ml-2">
       <button 
@@ -68,11 +80,11 @@ const InfoTooltip = ({ title, description }: { title: string, description: strin
         ?
       </button>
       {isOpen && (
-        <div className="absolute z-50 bottom-full right-0 sm:right-auto sm:left-1/2 transform sm:-translate-x-1/2 mb-2 w-60 sm:w-64 p-3 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-xl shadow-2xl text-left leading-relaxed">
+        <div className={`absolute z-50 bottom-full ${positionClass} mb-2 w-60 sm:w-64 p-3 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-xl shadow-2xl text-left leading-relaxed`}>
           <strong className="block text-white mb-1">{title}</strong>
           {description}
           {/* Trójkącik dopasowujący się do pozycji */}
-          <div className="absolute top-full right-[6px] sm:right-auto sm:left-1/2 transform sm:-translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
+          <div className={`absolute top-full ${triangleClass} border-4 border-transparent border-t-slate-800`}></div>
         </div>
       )}
     </div>
@@ -329,7 +341,7 @@ export default function Cennik() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-0 sm:ml-11">
-                  {/* Moduły w gridzie */}
+                  {/* Moduły w gridzie z poprawionymi dymkami */}
                   <div onClick={() => toggleAddon("copywriting")} className={`cursor-pointer p-5 rounded-2xl border transition-all ${addons.copywriting ? "bg-blue-600/10 border-blue-500" : "bg-slate-900/50 border-slate-800 hover:border-slate-600"}`}>
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex items-center">
@@ -337,7 +349,7 @@ export default function Cennik() {
                           {addons.copywriting && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Copywriting Sprzedażowy</h4>
-                        <InfoTooltip title="Oparto na psychologii" description="Nie lejemy wody. Piszemy konkretne teksty dopasowane do Twojej grupy docelowej, by nakłonić ich do zakupu. Cena dostosowuje się do wielkości wybranej witryny." />
+                        <InfoTooltip align="right" title="Oparto na psychologii" description="Nie lejemy wody. Piszemy konkretne teksty dopasowane do Twojej grupy docelowej, by nakłonić ich do zakupu. Cena dostosowuje się do wielkości wybranej witryny." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -353,7 +365,7 @@ export default function Cennik() {
                           {addons.googleMaps && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Dominacja Wizytówki Google</h4>
-                        <InfoTooltip title="Google Maps" description="Tworzymy, weryfikujemy i pozycjonujemy Twój profil tak, by wyświetlał się lokalnie i generował darmowe telefony." />
+                        <InfoTooltip align="right" title="Google Maps" description="Tworzymy, weryfikujemy i pozycjonujemy Twój profil tak, by wyświetlał się lokalnie i generował darmowe telefony." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -369,7 +381,7 @@ export default function Cennik() {
                           {addons.booking && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">System Rezerwacji</h4>
-                        <InfoTooltip title="Kalendarz Wizyt" description="Interaktywny kalendarz, w którym klienci mogą sami umawiać wizyty na wybrane godziny. Integrujemy to z Twoim telefonem." />
+                        <InfoTooltip align="left" title="Kalendarz Wizyt" description="Interaktywny kalendarz, w którym klienci mogą sami umawiać wizyty na wybrane godziny. Integrujemy to z Twoim telefonem." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -385,7 +397,7 @@ export default function Cennik() {
                           {addons.aiBot && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Wirtualny Asystent AI</h4>
-                        <InfoTooltip title="Bot na sterydach" description="Prywatny sprzedawca na Twojej stronie. Uczymy go cennika i 50 najczęstszych pytań (FAQ). Zbierze kontakty od klientów w środku nocy." />
+                        <InfoTooltip align="center" title="Bot na sterydach" description="Prywatny sprzedawca na Twojej stronie. Uczymy go cennika i 50 najczęstszych pytań (FAQ). Zbierze kontakty od klientów w środku nocy." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -401,7 +413,7 @@ export default function Cennik() {
                           {addons.branding && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Branding & Logo Premium</h4>
-                        <InfoTooltip title="Mini Księga Znaku" description="Tworzymy profesjonalne logo, dobieramy paletę kolorów firmowych oraz typografię. Dostajesz gotową tożsamość wizualną." />
+                        <InfoTooltip align="center" title="Mini Księga Znaku" description="Tworzymy profesjonalne logo, dobieramy paletę kolorów firmowych oraz typografię. Dostajesz gotową tożsamość wizualną." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -417,7 +429,7 @@ export default function Cennik() {
                           {addons.liveChat && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Czat na żywo (Messenger)</h4>
-                        <InfoTooltip title="Szybki kontakt" description="Wpinamy w róg strony dymek czatu zintegrowany z Twoim Facebookiem lub WhatsApp. Odpisujesz klientom prosto z telefonu." />
+                        <InfoTooltip align="right" title="Szybki kontakt" description="Wpinamy w róg strony dymek czatu zintegrowany z Twoim Facebookiem lub WhatsApp. Odpisujesz klientom prosto z telefonu." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -433,7 +445,7 @@ export default function Cennik() {
                           {addons.rodo && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Pakiet Prawny RODO</h4>
-                        <InfoTooltip title="Zgodność z prawem UE" description="Wdrażamy dedykowaną Politykę Prywatności, formularze zgodne z RODO oraz legalny pasek akceptacji plików Cookies." />
+                        <InfoTooltip align="left" title="Zgodność z prawem UE" description="Wdrażamy dedykowaną Politykę Prywatności, formularze zgodne z RODO oraz legalny pasek akceptacji plików Cookies." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -442,18 +454,19 @@ export default function Cennik() {
                     </div>
                   </div>
 
+                  {/* ZMIENIONY TEKST DLA DODATKOWEGO JĘZYKA */}
                   <div onClick={() => toggleAddon("languages")} className={`cursor-pointer p-5 rounded-2xl border transition-all ${addons.languages ? "bg-blue-600/10 border-blue-500" : "bg-slate-900/50 border-slate-800 hover:border-slate-600"}`}>
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex items-center">
                         <div className={`w-5 h-5 rounded flex items-center justify-center mr-3 ${addons.languages ? "bg-blue-600" : "bg-slate-700"}`}>
                           {addons.languages && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
-                        <h4 className="font-bold text-white text-sm">Dodatkowy Język</h4>
-                        <InfoTooltip title="np. Polski i Angielski" description="Przygotowujemy techniczną infrastrukturę strony do obsługi wielu języków wraz z inteligentnym przełącznikiem (flagi)." />
+                        <h4 className="font-bold text-white text-sm">Dodatkowy język obcy</h4>
+                        <InfoTooltip align="left" title="Dowolny język na stronie" description="Przygotowujemy techniczną infrastrukturę strony do obsługi wielu języków wraz z inteligentnym przełącznikiem (flagi)." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
-                      <p className="text-xs text-slate-500">Wersja anglojęzyczna</p>
+                      <p className="text-xs text-slate-500">Wybrany język dodatkowy</p>
                       <span className="font-bold text-blue-400 text-sm">+399 zł</span>
                     </div>
                   </div>
@@ -465,7 +478,7 @@ export default function Cennik() {
                           {addons.analytics && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Moduł Analityki Google</h4>
-                        <InfoTooltip title="Google Analytics 4" description="Podpinamy zaawansowane narzędzia śledzące. Będziesz wiedzieć, ilu masz odwiedzających, z jakich miast i w co najczęściej klikają." />
+                        <InfoTooltip align="center" title="Google Analytics 4" description="Podpinamy zaawansowane narzędzia śledzące. Będziesz wiedzieć, ilu masz odwiedzających, z jakich miast i w co najczęściej klikają." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -479,7 +492,7 @@ export default function Cennik() {
                   <div className="ml-0 sm:ml-11 mt-4 p-5 rounded-2xl bg-slate-900/30 border border-slate-800 flex justify-between items-center">
                     <div className="flex items-center">
                       <h4 className="font-bold text-white text-sm mr-2">Dodatkowa Podstrona</h4>
-                      <InfoTooltip title="Powyżej limitu 5 sztuk" description="Twój pakiet bazowy zawiera 5 podstron. Potrzebujesz osobnej zakładki dla każdej ze swoich nowych usług? Wybierz ilość." />
+                      <InfoTooltip align="left" title="Powyżej limitu 5 sztuk" description="Twój pakiet bazowy zawiera 5 podstron. Potrzebujesz osobnej zakładki dla każdej ze swoich nowych usług? Wybierz ilość." />
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="text-slate-400 text-xs hidden sm:block">+129 zł/szt.</span>

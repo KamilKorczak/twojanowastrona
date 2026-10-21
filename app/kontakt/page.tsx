@@ -135,15 +135,15 @@ export default function Kontakt() {
                 </div>
 
                 {/* E-mail */}
-                <div className="flex items-start gap-5 group">
-                  <div className="w-14 h-14 bg-blue-900/30 border border-blue-500/30 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-blue-600 transition-all duration-300">
-                    <svg className="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="flex items-center sm:items-start gap-4 sm:gap-5 group">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-900/30 border border-blue-500/30 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-blue-600 transition-all duration-300">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <div className="overflow-hidden">
-                    <div className="text-sm font-medium uppercase tracking-wider text-slate-500 mb-1">Napisz e-mail</div>
-                    <a href="mailto:twojanowastrona24@gmail.com" className="text-base sm:text-xl font-bold text-white hover:text-blue-400 transition-colors break-words">twojanowastrona24@gmail.com</a>
+                  <div className="overflow-hidden flex flex-col justify-center">
+                    <div className="text-xs sm:text-sm font-medium uppercase tracking-wider text-slate-500 mb-0.5 sm:mb-1">Napisz e-mail</div>
+                    <a href="mailto:twojanowastrona24@gmail.com" className="text-[13px] sm:text-xl font-bold text-white hover:text-blue-400 transition-colors whitespace-nowrap tracking-tight">twojanowastrona24@gmail.com</a>
                   </div>
                 </div>
 
