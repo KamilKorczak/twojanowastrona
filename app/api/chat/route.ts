@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { Resend } from "resend";
@@ -150,13 +149,17 @@ BAZA WIEDZY AGENCJI (PEŁNE 75 PYTAŃ I ODPOWIEDZI):
 
     const responseMessage = response.choices[0].message;
 
+    // Obsługa złapanego leadu
     if (responseMessage.tool_calls) {
+      // @ts-ignore
       const toolCall = responseMessage.tool_calls[0];
+      // @ts-ignore
       const args = JSON.parse(toolCall.function.arguments);
 
       console.log("🔥 BOT ZŁAPAŁ LEAD (RESEND):", args);
 
       try {
+        // Wysyłka maila za pomocą Resend
         const { data, error } = await resend.emails.send({
           from: 'Powiadomienia AI <onboarding@resend.dev>',
           to: ['twojanowastrona24@gmail.com'],
@@ -177,9 +180,11 @@ BAZA WIEDZY AGENCJI (PEŁNE 75 PYTAŃ I ODPOWIEDZI):
         console.error("Błąd krytyczny przy wysyłce Resend:", err);
       }
 
+      // Generowanie wiadomości po wysłaniu maila
       messages.push(responseMessage);
       messages.push({
         role: "tool",
+        // @ts-ignore
         tool_call_id: toolCall.id,
         content: "Proces wysyłki zakończony. Podziękuj teraz klientowi za pozostawienie kontaktu i poinformuj, że zespół wkrótce się z nim skontaktuje."
       });
@@ -195,6 +200,7 @@ BAZA WIEDZY AGENCJI (PEŁNE 75 PYTAŃ I ODPOWIEDZI):
       return NextResponse.json({ reply: secondResponse.choices[0].message.content });
     }
 
+    // Zwykła odpowiedź
     return NextResponse.json({ reply: responseMessage.content });
 
   } catch (error) {

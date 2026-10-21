@@ -54,11 +54,11 @@ export default function Portfolio() {
   const projects = [
     { category: "Architektura & Portfolio", image: "/mockup-1.jpg" },
     { category: "Hotelarstwo & Nieruchomości", image: "/mockup-2.jpg" },
-    { category: "Gastronomia & HoReCa", image: "/mockup-3.jpg" },
-    { category: "Salon Urody & Kosmetyka", image: "/mockup-4.jpg" },
+    { category: "Gastronomia", image: "/mockup-3.jpg" },
+    { category: "Kosmetyka", image: "/mockup-4.jpg" },
     { category: "Architektura Wnętrz", image: "/mockup-5.jpg" },
     { category: "Motoryzacja & Serwis", image: "/mockup-6.jpg" },
-    { category: "Fotografia Ślubna", image: "/mockup-7.jpg" },
+    { category: "Fotografia", image: "/mockup-7.jpg" },
     { category: "Agencja & Biznes B2B", image: "/mockup-8.jpg" }
   ];
 
@@ -68,8 +68,7 @@ export default function Portfolio() {
       <div 
         className="absolute inset-0 z-0 opacity-10 bg-cover bg-center"
         style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=3840&q=80')",
-          transform: `translateY(${scrollY * 0.3}px)`
+          backgroundImage: "url('https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=3840&q=80')"
         }}
       ></div>
       <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19] via-[#0B0F19]/90 to-[#0B0F19] z-0"></div>
@@ -83,7 +82,7 @@ export default function Portfolio() {
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight drop-shadow-lg flex flex-col items-center justify-center">
              <div className="flex flex-wrap justify-center gap-2">
-               <HoverLetters text="Zobacz więcej projektów w naszym wykonaniu z różnych branż." />
+               <HoverLetters text="Zobacz więcej projektów w naszym wykonaniu" />
              </div>
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto font-light mt-6">

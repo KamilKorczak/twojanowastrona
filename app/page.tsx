@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-// --- SILNIK ANIMACJI SEKCJI ---
+// --- SILNIK ANIMACJI SEKCJI (Przyspieszony do 700ms) ---
 const Reveal = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
@@ -25,8 +25,8 @@ const Reveal = ({ children, delay = 0, className = "" }: { children: React.React
   return (
     <div
       ref={ref}
-      className={`transition-all duration-1000 ease-out transform ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+      className={`transition-all duration-700 ease-out transform ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
@@ -52,7 +52,7 @@ const HoverLetters = ({ text, className = "" }: { text: string, className?: stri
   );
 };
 
-// --- EFEKT PISANIA NA MASZYNIE (Typewriter) ---
+// --- EFEKT PISANIA NA MASZYNIE (Przyspieszony) ---
 const TypewriterEffect = ({ words }: { words: string[] }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
@@ -70,17 +70,17 @@ const TypewriterEffect = ({ words }: { words: string[] }) => {
       } else {
         timeoutId = setTimeout(() => {
           setCurrentText(word.substring(0, currentText.length - 1));
-        }, 50); 
+        }, 30); 
       }
     } else {
       if (currentText === word) {
         timeoutId = setTimeout(() => {
           setIsDeleting(true);
-        }, 2000); 
+        }, 1500); 
       } else {
         timeoutId = setTimeout(() => {
           setCurrentText(word.substring(0, currentText.length + 1));
-        }, 100); 
+        }, 70); 
       }
     }
 
@@ -101,10 +101,7 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [scrollY, setScrollY] = useState(0);
   
-  // Wyskakujące okienko (Modal)
   const [isFormOpen, setIsFormOpen] = useState(false);
-  
-  // Karuzela i bezpieczne ładowanie strony
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
 
@@ -132,7 +129,6 @@ export default function Home() {
     return () => { document.body.style.overflow = "auto"; };
   }, [isFormOpen]);
 
-  // ZAKTUALIZOWANE PORTFOLIO Z NOWYMI MAKIETAMI
   const portfolioItems = [
     { title: "Architektura i Wnętrza", desc: "Minimalistyczny design skupiony na portfolio projektów.", type: "Wizytówka Premium", image: "/mockup-architektura.jpg" },
     { title: "Firma Budowlana", desc: "Solidna strona firmowa z pełną ofertą usług i galerią.", type: "Strona Firmowa", image: "/mockup-budowlana.jpg" },
@@ -147,7 +143,7 @@ export default function Home() {
     },
     { 
       q: "Nie mam własnych tekstów, zdjęć ani logo. Czy pomożecie?", 
-      a: "Oczywiście. Oferujemy profesjonalny copywriting sprzedażowy (píšemy teksty oparte na psychologii klientów), dobieramy profesjonalne zdjęcia oraz możemy wykonać dla Ciebie spójny Branding i Logo Premium." 
+      a: "Oczywiście. Oferujemy profesjonalny copywriting sprzedażowy (piszemy teksty oparte na psychologii klientów), dobieramy profesjonalne zdjęcia oraz możemy wykonać dla Ciebie spójny Branding i Logo Premium." 
     },
     { 
       q: "Jak wyglądają koszty utrzymania strony po jej uruchomieniu?", 
@@ -158,7 +154,7 @@ export default function Home() {
       a: "Pracujemy bez ryzyka. Na start przygotowujemy dla Ciebie darmowy szkic koncepcyjny. Jeśli kierunek wizualny nie do końca spełnia Twoje oczekiwania, na bieżąco wdrażamy Twoje uwagi, dopasowując projekt w 100% do wizji Twojego biznesu." 
     },
     { 
-      q: "Czy moja strona będzie dobrze działać na telefonach i tabletaach?", 
+      q: "Czy moja strona będzie dobrze działać na telefonach i tabletach?", 
       a: "Tak. Wszystkie nasze projekty powstają w technologii w pełni responsywnej (RWD). Witryna automatycznie i płynnie dostosowuje się do każdego ekranu – od małego smartfona po duży monitor 4K." 
     },
     { 
@@ -210,18 +206,14 @@ export default function Home() {
 
   return (
     <>
-      {/* 1. HERO SECTION */}
-      <section className="relative pt-28 pb-24 text-center flex flex-col items-center justify-center min-h-[90vh] overflow-hidden">
+      <section className="relative pt-28 pb-24 text-center flex flex-col items-center justify-center min-h-[90vh] overflow-hidden px-4">
         <div 
           className="absolute inset-0 z-0 opacity-20 bg-cover bg-center"
-          style={{ 
-            backgroundImage: "url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=3840&q=80')",
-            transform: `translateY(${scrollY * 0.3}px)`
-          }}
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=3840&q=80')" }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19]/80 via-[#0B0F19]/70 to-[#0B0F19] z-0"></div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 flex-grow flex flex-col justify-center">
+        <div className="relative z-10 max-w-5xl mx-auto flex-grow flex flex-col justify-center">
           <Reveal delay={0}>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/40 bg-blue-500/10 text-blue-400 text-xs font-semibold mb-8 tracking-wide uppercase shadow-[0_0_15px_rgba(59,130,246,0.2)]">
               <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
@@ -230,24 +222,22 @@ export default function Home() {
           </Reveal>
           
           <Reveal delay={150}>
-            <h1 className="text-5xl sm:text-7xl font-bold tracking-tight leading-[1.15] mb-8 text-white drop-shadow-lg cursor-default flex flex-col items-center justify-center">
-              <div>
-                <HoverLetters text="Zamień odwiedzających w" />
-              </div>
-              <div className="mt-2 text-blue-400 p-2 hover:text-blue-300 transition-all duration-300 hover:scale-105">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight mb-8 text-white drop-shadow-lg cursor-default flex flex-col items-center justify-center gap-2">
+              <span className="break-words">Zamień odwiedzających w</span>
+              <span className="text-blue-400 p-2 hover:text-blue-300 transition-all duration-300 hover:scale-105 inline-block">
                 prawdziwych klientów.
-              </div>
+              </span>
             </h1>
           </Reveal>
 
           <Reveal delay={300}>
-            <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed font-light drop-shadow-sm">
+            <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed font-light drop-shadow-sm px-2">
               Projektujemy szybkie, zoptymalizowane strony internetowe dla firm, które chcą dominować w swojej branży. Otrzymaj wstępny projekt strony bez żadnych zobowiązań.
             </p>
           </Reveal>
 
           <Reveal delay={450}>
-            <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button 
                 onClick={() => setIsFormOpen(true)} 
                 className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] hover:-translate-y-1"
@@ -261,41 +251,35 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={600}>
-            <div className="mt-16 flex flex-wrap justify-center gap-x-8 gap-y-4 text-xs sm:text-sm font-medium text-slate-400">
-              <div className="flex items-center gap-2 hover:text-white hover:-translate-y-0.5 transition-all cursor-default">
-                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                Certyfikat SSL w cenie
-              </div>
-              <div className="flex items-center gap-2 hover:text-white hover:-translate-y-0.5 transition-all cursor-default">
-                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                Zgodność z RODO
-              </div>
-              <div className="flex items-center gap-2 hover:text-white hover:-translate-y-0.5 transition-all cursor-default">
-                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                Ultraszybkie serwery
-              </div>
-              <div className="flex items-center gap-2 hover:text-white hover:-translate-y-0.5 transition-all cursor-default">
-                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                Jasna umowa i przejrzyste zasady
-              </div>
+            <div className="mt-16 flex flex-wrap justify-center gap-3 text-[11px] sm:text-xs font-medium text-slate-400 px-2">
+              <span className="bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-full flex items-center gap-2">
+                <span className="text-blue-500 font-bold">✓</span> Certyfikat SSL w cenie
+              </span>
+              <span className="bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-full flex items-center gap-2">
+                <span className="text-blue-500 font-bold">✓</span> Zgodność z RODO
+              </span>
+              <span className="bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-full flex items-center gap-2">
+                <span className="text-blue-500 font-bold">✓</span> Ultraszybkie serwery
+              </span>
+              <span className="bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-full flex items-center gap-2">
+                <span className="text-blue-500 font-bold">✓</span> Jasne zasady
+              </span>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* 2. DARMOWY AUDYT */}
       <section className="py-12 bg-gradient-to-r from-[#0B0F19] via-blue-900/20 to-[#0B0F19] border-b border-blue-500/20">
         <Reveal delay={0}>
-          <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 cursor-default">
+          <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 cursor-default text-center md:text-left">
             <div className="flex-1">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 flex flex-wrap items-center gap-3">
-                <HoverLetters text="Dlaczego Twoja strona" /> 
-                <TypewriterEffect words={["nie sprzedaje?", "jest wolna?", "nie pokazuje się w Google?", "wygląda staro?"]} />
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 leading-tight">
+                Dlaczego Twoja strona <TypewriterEffect words={["nie sprzedaje?", "jest wolna?", "nie pokazuje się w Google?", "wygląda staro?"]} />
               </h2>
-              <p className="text-slate-400 text-sm mt-2">Prześlij nam link do swojej obecnej witryny. Prześwietlimy ją całkowicie za darmo i wskażemy główne błędy, które blokują Twoją sprzedaż w sieci.</p>
+              <p className="text-slate-400 text-sm mt-3">Prześlij nam link do swojej obecnej witryny. Prześwietlimy ją całkowicie za darmo i wskażemy główne błędy, które blokują Twoją sprzedaż w sieci.</p>
             </div>
-            <div className="shrink-0">
-              <Link href="/audyt" className="inline-block px-8 py-3.5 bg-white text-blue-900 font-bold rounded-xl hover:bg-slate-200 transition-colors shadow-lg hover:-translate-y-1 duration-300">
+            <div className="shrink-0 w-full md:w-auto">
+              <Link href="/audyt" className="block w-full md:w-auto px-8 py-3.5 bg-white text-blue-900 font-bold rounded-xl hover:bg-slate-200 transition-colors shadow-lg text-center hover:-translate-y-1 duration-300">
                 Zamów darmowy audyt
               </Link>
             </div>
@@ -303,13 +287,12 @@ export default function Home() {
         </Reveal>
       </section>
 
-      {/* 3. PROCES WSPÓŁPRACY */}
       <section className="px-6 py-24 bg-[#0E131F] border-b border-slate-800/50">
         <div className="max-w-6xl mx-auto">
           <Reveal delay={0}>
             <div className="text-center mb-16 cursor-default">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white flex justify-center flex-wrap">
-                 <HoverLetters text="Przejrzysty proces współpracy" />
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+                 Przejrzysty proces współpracy
               </h2>
               <p className="text-slate-400">Pełen profesjonalizm na każdym kroku. Zobacz, jak przebiega realizacja.</p>
             </div>
@@ -348,13 +331,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. PORÓWNANIE */}
       <section className="px-6 py-24 bg-[#0B0F19] relative z-10 border-b border-slate-800/50">
         <div className="max-w-6xl mx-auto">
           <Reveal delay={0}>
             <div className="text-center mb-16 cursor-default">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white flex justify-center flex-wrap">
-                 <HoverLetters text="Czym różnimy się od tradycyjnych agencji?" />
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+                 Czym różnimy się od tradycyjnych agencji?
               </h2>
               <p className="text-slate-400">Wybierz jakość premium bez korporacyjnych narzutów i skomplikowanych procedur.</p>
             </div>
@@ -435,13 +417,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. PORTFOLIO */}
       <section className="py-24 border-b border-slate-800/50 bg-[#0B0F19]">
         <div className="max-w-6xl mx-auto px-6">
           <Reveal delay={0}>
             <div className="text-center mb-16 cursor-default">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white flex justify-center flex-wrap">
-                 <HoverLetters text="Nasze realizacje" />
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+                 Nasze realizacje
               </h2>
               <p className="text-slate-400 max-w-2xl mx-auto">Projektujemy z myślą o użyteczności. Zobacz przykładowe koncepcje, które stanowią solidny fundament pod budowę witryny dla Twojej firmy.</p>
             </div>
@@ -451,7 +432,7 @@ export default function Home() {
             {portfolioItems.map((item, idx) => (
               <Reveal delay={idx * 150} key={idx}>
                 <div className="group rounded-2xl bg-slate-900/50 border border-slate-800 overflow-hidden hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] transition-all duration-500 cursor-pointer flex flex-col h-full">
-                  <div className="h-64 overflow-hidden relative bg-slate-800 border-b border-slate-800">
+                  <div className="aspect-[4/3] w-full overflow-hidden relative bg-slate-800 border-b border-slate-800">
                     <img src={item.image} alt={item.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition duration-700 ease-out" />
                     <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/10 transition-colors duration-500"></div>
                   </div>
@@ -475,13 +456,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. OPINIE */}
       <section className="py-24 bg-[#0E131F] border-b border-slate-800/50">
         <div className="max-w-6xl mx-auto px-6 mb-12 cursor-default">
           <Reveal delay={0}>
             <div className="text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white flex justify-center flex-wrap">
-                 <HoverLetters text="Co mówią o nas przedsiębiorcy?" />
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+                 Co mówią o nas przedsiębiorcy?
               </h2>
               <p className="text-slate-400">Setki udanych realizacji zaczynają się od jednego wstępnego szkicu.</p>
             </div>
@@ -541,7 +521,6 @@ export default function Home() {
         </Reveal>
       </section>
 
-      {/* 7. ZAKTUALIZOWANE FAQ */}
       <section className="px-6 py-24 bg-[#0B0F19] border-b border-slate-800/50">
         <div className="max-w-3xl mx-auto">
           <Reveal delay={0}>
@@ -574,7 +553,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. WYSKAKUJĄCY FORMULARZ (MODAL) */}
       {isFormOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-[#020617]/90 backdrop-blur-sm animate-fadeIn">
           <div className="absolute inset-0 cursor-pointer" onClick={() => setIsFormOpen(false)}></div>
@@ -600,22 +578,22 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-1">
                   <label className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-1.5 focus-within:text-blue-400">Imię / Nazwa Firmy</label>
-                  <input type="text" name="name" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm" placeholder="np. Jan Kowalski" />
+                  <input type="text" name="name" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base" placeholder="np. Jan Kowalski" />
                 </div>
                 <div className="md:col-span-1">
                   <label className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-1.5 focus-within:text-blue-400">Numer telefonu</label>
-                  <input type="tel" name="phone" required value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm" placeholder="+48 000 000 000" />
+                  <input type="tel" name="phone" required value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base" placeholder="+48 000 000 000" />
                 </div>
               </div>
               
               <div>
                 <label className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-1.5 focus-within:text-blue-400">E-mail (Opcjonalnie)</label>
-                <input type="email" name="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm" placeholder="kontakt@firma.pl" />
+                <input type="email" name="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base" placeholder="kontakt@firma.pl" />
               </div>
 
               <div>
                 <label className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-1.5 focus-within:text-blue-400">Czego głównie potrzebujesz?</label>
-                <select name="package" value={formData.package} onChange={(e) => setFormData({ ...formData, package: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm appearance-none cursor-pointer">
+                <select name="package" value={formData.package} onChange={(e) => setFormData({ ...formData, package: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base appearance-none cursor-pointer">
                   <option value="" disabled>Wybierz główny cel projektu...</option>
                   <option value="one-page">Prosta Strona Wizytówka (One-Page)</option>
                   <option value="multi-page">Rozbudowana Strona Firmowa z podstronami</option>
@@ -627,7 +605,7 @@ export default function Home() {
 
               <div>
                 <label className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-1.5 focus-within:text-blue-400">Dodatkowe informacje / Branża</label>
-                <textarea name="message" rows={3} required value={formData.industry} onChange={(e) => setFormData({ ...formData, industry: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-sm resize-none" placeholder="Czym się zajmujesz? Masz już jakieś konkretne pomysły?" />
+                <textarea name="message" rows={3} required value={formData.industry} onChange={(e) => setFormData({ ...formData, industry: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.2)] transition-all text-base resize-none" placeholder="Czym się zajmujesz? Masz już jakieś konkretne pomysły?" />
               </div>
 
               <button type="submit" className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl hover:-translate-y-1 transition-all text-sm mt-2 shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]">

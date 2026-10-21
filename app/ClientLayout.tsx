@@ -23,7 +23,8 @@ const HoverLetters = ({ text, className = "" }: { text: string, className?: stri
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [cookieAccepted, setCookieAccepted] = useState(false);
-  const pathname = usePathname(); // Sprawdzamy, na jakiej stronie jesteśmy, żeby podświetlić menu
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <>
@@ -31,11 +32,27 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <header className="fixed top-0 w-full z-50 backdrop-blur-xl bg-[#0B0F19]/90 border-b border-slate-800/80 shadow-sm transition-all">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-6">
+            {/* Przycisk Hamburger na Mobile */}
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden text-slate-300 hover:text-white focus:outline-none"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {mobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+
             <Link className="text-xl font-bold tracking-tight text-white transition-colors duration-300 group flex" href="/">
               <HoverLetters text="twoja" />
               <span className="text-blue-500 font-light group-hover:text-blue-400 transition-colors">nowa</span>
               <HoverLetters text="strona.pl" />
             </Link>
+
+            {/* Nawigacja Desktopowa */}
             <nav className="hidden lg:flex gap-6 text-sm font-medium">
               <Link 
                 href="/" 
@@ -83,6 +100,17 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             </a>
           </div>
         </div>
+
+        {/* Menu Rozwijane (Mobile) */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden absolute top-20 left-0 w-full bg-[#0B0F19] border-b border-slate-800 shadow-xl py-4 px-6 flex flex-col gap-4 z-40">
+            <Link onClick={() => setMobileMenuOpen(false)} href="/" className={`text-base font-medium ${pathname === "/" ? "text-blue-400" : "text-slate-300"}`}>Strona Główna</Link>
+            <Link onClick={() => setMobileMenuOpen(false)} href="/portfolio" className={`text-base font-medium ${pathname === "/portfolio" ? "text-blue-400" : "text-slate-300"}`}>Realizacje</Link>
+            <Link onClick={() => setMobileMenuOpen(false)} href="/cennik" className={`text-base font-medium ${pathname === "/cennik" ? "text-blue-400" : "text-slate-300"}`}>Cennik usług</Link>
+            <Link onClick={() => setMobileMenuOpen(false)} href="/audyt" className={`text-base font-medium ${pathname === "/audyt" ? "text-blue-400" : "text-slate-300"}`}>Darmowy Audyt</Link>
+            <Link onClick={() => setMobileMenuOpen(false)} href="/kontakt" className={`text-base font-medium ${pathname === "/kontakt" ? "text-blue-400" : "text-slate-300"}`}>Kontakt</Link>
+          </div>
+        )}
       </header>
 
       {/* Miejsce na podstrony */}
@@ -129,7 +157,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-6 border-t border-slate-800/60 pt-6 text-center text-xs text-slate-600">
-        2026 twojanowastrona.pl. Wszelkie prawa zastrzeżone. Projekt i realizacja: Kamil Korczak.
+          2026 twojanowastrona.pl. Wszelkie prawa zastrzeżone. Projekt i realizacja: Kamil Korczak.
         </div>
       </footer>
 

@@ -353,7 +353,7 @@ export default function Cennik() {
                           {addons.googleMaps && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Dominacja Wizytówki Google</h4>
-                        <InfoTooltip title="Google Maps" description="Tworzymy, weryfikujemy i pozycjonujemy Twój profil tak, by wyświetlał się lokalnie i generował darmowe telefony." />
+                        <InfoTooltip title="Google Maps" description="Tworzymy, weryfikujemy i pozycjonujemy Twój profil tak, by wyświetlał się lokalnie w TOP3 i generował darmowe telefony." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">
@@ -385,7 +385,7 @@ export default function Cennik() {
                           {addons.aiBot && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
                         <h4 className="font-bold text-white text-sm">Wirtualny Asystent AI</h4>
-                        <InfoTooltip title="Bot na sterydach" description="Prywatny sprzedawca na Twojej stronie. Uczymy go cennika i 50 najczęstszych pytań (FAQ). Zbierze kontakty od klientów w środku nocy." />
+                        <InfoTooltip title="Bot na sterydach" description="Prywatny sprzedawca na Twojej stronie. Uczymy go cennika i 15 najczęstszych pytań (FAQ). Zbierze kontakty od klientów w środku nocy." />
                       </div>
                     </div>
                     <div className="pl-8 flex justify-between items-end">

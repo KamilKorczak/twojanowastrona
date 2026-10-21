@@ -148,7 +148,7 @@ export default function Kontakt() {
                 </div>
 
                 <div className="pt-8 border-t border-slate-800/50 mt-10">
-                  <div className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">Znajdziesz nas również tutaj:</div>
+                  <div className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">Znajdziesz mnie również tutaj:</div>
                   <div className="flex gap-4">
                     {/* Przyciski Social Media (zostawione jako "placeholdery" na przyszłość, w stylu premium) */}
                     <a href="#" className="w-12 h-12 bg-slate-900 border border-slate-700 hover:border-blue-500 hover:bg-blue-600/10 transition-all duration-300 rounded-full flex items-center justify-center text-slate-400 hover:text-blue-400 group" title="Facebook">
