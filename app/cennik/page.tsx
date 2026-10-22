@@ -74,8 +74,11 @@ const InfoTooltip = ({ title, description, align = "center" }: { title: string, 
         type="button"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-5 h-5 rounded-full bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center text-xs hover:bg-blue-600 hover:text-white transition-colors focus:outline-none"
+        onClick={(e) => {
+          e.stopPropagation(); // Zapobiega propagacji kliknięcia, by karta nadrzędna nie włączała/wyłączała zaznaczenia
+          setIsOpen(!isOpen);
+        }}
+        className="w-5 h-5 rounded-full bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center text-xs hover:bg-blue-600 hover:text-white transition-colors focus:outline-none z-20 relative"
       >
         ?
       </button>
@@ -85,18 +88,21 @@ const InfoTooltip = ({ title, description, align = "center" }: { title: string, 
           {/* Tło dla urządzeń mobilnych - pozwala zamknąć dymek klikając gdziekolwiek */}
           <div 
             className="fixed inset-0 z-[90] sm:hidden" 
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(false);
+            }}
             aria-hidden="true"
           ></div>
 
           <div className={`
-            z-[100] p-3 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-xl shadow-2xl text-left leading-relaxed
-            /* WERSJA MOBILNA: wyśrodkowany dymek na dole ekranu */
-            fixed bottom-10 left-1/2 -translate-x-1/2 w-[90vw] max-w-sm
+            z-[100] p-4 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-2xl shadow-2xl text-left leading-relaxed
+            /* WERSJA MOBILNA: idealnie wyśrodkowany dymek na środku ekranu, bez ucinania */
+            fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] max-w-xs
             /* WERSJA DESKTOP: powrót do absolute i pozycji nad ikoną */
-            sm:absolute sm:bottom-full sm:mb-2 sm:w-64 ${desktopPosition}
+            sm:top-auto sm:left-auto sm:translate-x-0 sm:translate-y-0 sm:absolute sm:bottom-full sm:mb-2 sm:w-64 ${desktopPosition}
           `}>
-            <strong className="block text-white mb-1">{title}</strong>
+            <strong className="block text-white mb-1 text-sm">{title}</strong>
             {description}
             
             {/* Trójkącik - widoczny tylko na komputerach */}
@@ -471,7 +477,6 @@ export default function Cennik() {
                     </div>
                   </div>
 
-                  {/* ZMIENIONY TEKST DLA DODATKOWEGO JĘZYKA */}
                   <div onClick={() => toggleAddon("languages")} className={`cursor-pointer p-5 rounded-2xl border transition-all ${addons.languages ? "bg-blue-600/10 border-blue-500" : "bg-slate-900/50 border-slate-800 hover:border-slate-600"}`}>
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex items-center">
@@ -626,17 +631,14 @@ export default function Cennik() {
         )}
       </section>
 
-      {/* NOWA, BOGATA SEKCJA: W JAKIEJ KOLEJNOŚCI INWESTOWAĆ (GLASSMORPHISM GRID) */}
+      {/* SEKCJA: W JAKIEJ KOLEJNOŚCI INWESTOWAĆ */}
       <section className="px-6 py-24 max-w-6xl mx-auto relative z-10 w-full mt-8 border-t border-slate-800/50">
         <Reveal delay={0}>
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-white text-center cursor-default">
-              {/* WERSJA NA KOMPUTERY (animowane litery) */}
               <span className="hidden sm:block">
                 <HoverLetters text="W jakiej kolejności inwestować budżet?" />
               </span>
-              
-              {/* WERSJA NA TELEFONY (czysty tekst, elegancko złamany) */}
               <span className="sm:hidden block leading-tight">
                 W jakiej kolejności<br className="mb-1" />
                 <span className="text-blue-400">inwestować budżet?</span>
@@ -648,13 +650,10 @@ export default function Cennik() {
           </div>
         </Reveal>
 
-        {/* Siatka Kart 2x2 z efektem Hover */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Reveal delay={100} className="h-full">
             <div className="group relative p-8 rounded-3xl bg-slate-900/40 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all duration-500 overflow-hidden h-full flex flex-col hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(59,130,246,0.15)]">
-              {/* Tło znaku wodnego */}
               <div className="absolute -right-8 -bottom-12 text-slate-800/30 font-black text-9xl transition-transform duration-500 group-hover:scale-110 group-hover:text-slate-800/50 pointer-events-none">01</div>
-              
               <div className="w-14 h-14 rounded-2xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                 <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
               </div>
@@ -668,7 +667,6 @@ export default function Cennik() {
           <Reveal delay={200} className="h-full">
             <div className="group relative p-8 rounded-3xl bg-slate-900/40 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all duration-500 overflow-hidden h-full flex flex-col hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(59,130,246,0.15)]">
               <div className="absolute -right-8 -bottom-12 text-slate-800/30 font-black text-9xl transition-transform duration-500 group-hover:scale-110 group-hover:text-slate-800/50 pointer-events-none">02</div>
-              
               <div className="w-14 h-14 rounded-2xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                 <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
               </div>
@@ -682,7 +680,6 @@ export default function Cennik() {
           <Reveal delay={300} className="h-full">
             <div className="group relative p-8 rounded-3xl bg-slate-900/40 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all duration-500 overflow-hidden h-full flex flex-col hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(59,130,246,0.15)]">
               <div className="absolute -right-8 -bottom-12 text-slate-800/30 font-black text-9xl transition-transform duration-500 group-hover:scale-110 group-hover:text-slate-800/50 pointer-events-none">03</div>
-              
               <div className="w-14 h-14 rounded-2xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                 <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
               </div>
@@ -696,7 +693,6 @@ export default function Cennik() {
           <Reveal delay={400} className="h-full">
             <div className="group relative p-8 rounded-3xl bg-slate-900/40 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all duration-500 overflow-hidden h-full flex flex-col hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(59,130,246,0.15)]">
               <div className="absolute -right-8 -bottom-12 text-slate-800/30 font-black text-9xl transition-transform duration-500 group-hover:scale-110 group-hover:text-slate-800/50 pointer-events-none">04</div>
-              
               <div className="w-14 h-14 rounded-2xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                 <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
               </div>
@@ -712,7 +708,6 @@ export default function Cennik() {
       {/* MODAL Z FORMULARZEM WYSYŁKI WSTĘPNEGO ZAMÓWIENIA */}
       {isCheckoutOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-[#020617]/90 backdrop-blur-sm animate-fadeIn">
-          {/* Tło klikalne zamykające modal */}
           <div className="absolute inset-0 cursor-pointer" onClick={() => setIsCheckoutOpen(false)}></div>
           
           <div className="relative w-full max-w-lg overflow-hidden p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-slate-900 to-[#0B0F19] border border-slate-700 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
