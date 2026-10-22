@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 // Współdzielone komponenty wizualne dla Layoutu
@@ -107,9 +108,18 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 twojanowastrona24@gmail.com
               </a>
             </div>
-            <a href="tel:518496254" className="text-sm font-medium text-slate-300 hover:text-white hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2 group">
+
+            {/* WERSJA NA KOMPUTER (zostaje bez zmian - pełny numer i tekst) */}
+            <a href="tel:518496254" className="hidden sm:flex text-sm font-medium text-slate-300 hover:text-white hover:-translate-y-0.5 transition-all duration-300 items-center gap-2 group">
               <svg className="w-4 h-4 text-blue-500 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
               518 496 254
+            </a>
+
+            {/* WERSJA NA TELEFON (niebieska ikona słuchawki w kółku) */}
+            <a href="tel:518496254" className="flex sm:hidden w-10 h-10 bg-blue-600/10 border border-blue-500/30 rounded-xl items-center justify-center text-blue-400 hover:bg-blue-600 hover:text-white transition-all shadow-md group" aria-label="Zadzwoń do nas">
+              <svg className="w-5 h-5 text-blue-500 group-hover:text-white group-hover:scale-110 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
             </a>
           </div>
         </div>
@@ -136,7 +146,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           <div>
             <div className="text-xl font-bold tracking-tight text-white mb-4 flex">
-              twoja<span className="text-blue-500 font-light">nowa</span>strona.pl
+              twoja<span className="text-blue-500 font-light">nowa</span>strona24.pl
             </div>
             <p className="text-xs text-slate-500 leading-relaxed mb-4">
               Nowoczesne, szybkie i konwersyjne strony internetowe dla małych i średnich firm. Realizacje z darmowym projektem wstępnym.
