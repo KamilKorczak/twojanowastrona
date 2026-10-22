@@ -56,16 +56,16 @@ const HoverLetters = ({ text, className = "" }: { text: string, className?: stri
 const InfoTooltip = ({ title, description, align = "center" }: { title: string, description: string, align?: "left" | "center" | "right" }) => {
   const [isOpen, setIsOpen] = useState(false);
   
-  // Logika dopasowująca stronę otwierania się dymka na telefonach
-  let positionClass = "left-1/2 -translate-x-1/2";
-  let triangleClass = "left-1/2 -translate-x-1/2";
+  // Klasy dla wersji desktopowej (z prefiksem sm:)
+  let desktopPosition = "sm:left-1/2 sm:-translate-x-1/2";
+  let desktopTriangle = "sm:left-1/2 sm:-translate-x-1/2";
   
   if (align === "left") {
-    positionClass = "left-[-10px] sm:left-1/2 sm:-translate-x-1/2";
-    triangleClass = "left-[18px] sm:left-1/2 sm:-translate-x-1/2";
+    desktopPosition = "sm:left-1/2 sm:-translate-x-1/2";
+    desktopTriangle = "sm:left-1/2 sm:-translate-x-1/2";
   } else if (align === "right") {
-    positionClass = "right-[-10px] sm:right-auto sm:left-1/2 sm:-translate-x-1/2";
-    triangleClass = "right-[18px] sm:right-auto sm:left-1/2 sm:-translate-x-1/2";
+    desktopPosition = "sm:right-auto sm:left-1/2 sm:-translate-x-1/2";
+    desktopTriangle = "sm:right-auto sm:left-1/2 sm:-translate-x-1/2";
   }
 
   return (
@@ -79,13 +79,30 @@ const InfoTooltip = ({ title, description, align = "center" }: { title: string, 
       >
         ?
       </button>
+      
       {isOpen && (
-        <div className={`absolute z-50 bottom-full ${positionClass} mb-2 w-60 sm:w-64 p-3 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-xl shadow-2xl text-left leading-relaxed`}>
-          <strong className="block text-white mb-1">{title}</strong>
-          {description}
-          {/* Trójkącik dopasowujący się do pozycji */}
-          <div className={`absolute top-full ${triangleClass} border-4 border-transparent border-t-slate-800`}></div>
-        </div>
+        <>
+          {/* Tło dla urządzeń mobilnych - pozwala zamknąć dymek klikając gdziekolwiek */}
+          <div 
+            className="fixed inset-0 z-[90] sm:hidden" 
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          ></div>
+
+          <div className={`
+            z-[100] p-3 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-xl shadow-2xl text-left leading-relaxed
+            /* WERSJA MOBILNA: wyśrodkowany dymek na dole ekranu */
+            fixed bottom-10 left-1/2 -translate-x-1/2 w-[90vw] max-w-sm
+            /* WERSJA DESKTOP: powrót do absolute i pozycji nad ikoną */
+            sm:absolute sm:bottom-full sm:mb-2 sm:w-64 ${desktopPosition}
+          `}>
+            <strong className="block text-white mb-1">{title}</strong>
+            {description}
+            
+            {/* Trójkącik - widoczny tylko na komputerach */}
+            <div className={`hidden sm:block absolute top-full ${desktopTriangle} border-4 border-transparent border-t-slate-800`}></div>
+          </div>
+        </>
       )}
     </div>
   );
