@@ -75,7 +75,7 @@ const InfoTooltip = ({ title, description, align = "center" }: { title: string, 
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
         onClick={(e) => {
-          e.stopPropagation(); // Zapobiega propagacji kliknięcia, by karta nadrzędna nie włączała/wyłączała zaznaczenia
+          e.stopPropagation(); // Zapobiega propagacji kliknięcia
           setIsOpen(!isOpen);
         }}
         className="w-5 h-5 rounded-full bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center text-xs hover:bg-blue-600 hover:text-white transition-colors focus:outline-none z-20 relative"
@@ -87,7 +87,7 @@ const InfoTooltip = ({ title, description, align = "center" }: { title: string, 
         <>
           {/* Tło dla urządzeń mobilnych - pozwala zamknąć dymek klikając gdziekolwiek */}
           <div 
-            className="fixed inset-0 z-[90] sm:hidden" 
+            className="fixed inset-0 z-[90] sm:hidden bg-black/40 backdrop-blur-[2px]" 
             onClick={(e) => {
               e.stopPropagation();
               setIsOpen(false);
@@ -97,10 +97,10 @@ const InfoTooltip = ({ title, description, align = "center" }: { title: string, 
 
           <div className={`
             z-[100] p-4 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-2xl shadow-2xl text-left leading-relaxed
-            /* WERSJA MOBILNA: eleganckie okienko na dole ekranu telefonu, zero szans na ucięcie */
-            fixed bottom-12 left-1/2 -translate-x-1/2 w-[90vw] max-w-sm
-            /* WERSJA DESKTOP: powrót do absolute i pozycji nad ikoną, komputer bez zmian */
-            sm:fixed-none sm:absolute sm:bottom-full sm:mb-2 sm:w-64 ${desktopPosition}
+            /* WERSJA MOBILNA: sprawdzona, bezpieczna pozycja na dole ekranu, zero ucinania */
+            fixed bottom-16 left-1/2 -translate-x-1/2 w-[90vw] max-w-sm
+            /* WERSJA DESKTOP: powrót do absolute i pozycji nad ikoną */
+            sm:top-auto sm:left-auto sm:translate-x-0 sm:translate-y-0 sm:absolute sm:bottom-full sm:mb-2 sm:w-64 ${desktopPosition}
           `}>
             <strong className="block text-white mb-1 text-sm">{title}</strong>
             {description}
@@ -204,7 +204,6 @@ export default function Cennik() {
     const packageName = selectedPackage === "one-page" ? "Wizytówka One-Page" : "Strona Firmowa";
     const maintenanceName = maintenance === "none" ? "Brak opieki" : (maintenance === "standard" ? "Standard" : "VIP");
     
-    // Budowanie czytelnej wiadomości z zamówieniem do maila
     const orderDetails = `
       NOWE ZAPYTANIE Z KALKULATORA:
       Pakiet główny: ${packageName}
@@ -216,7 +215,7 @@ export default function Cennik() {
     `;
 
     const formDataObj = new FormData();
-    formDataObj.append("access_key", "e44f0f1b-bc96-41d4-9a5b-e08af7ec7f0f"); // Twój klucz Web3Forms
+    formDataObj.append("access_key", "e44f0f1b-bc96-41d4-9a5b-e08af7ec7f0f");
     formDataObj.append("name", clientData.name);
     formDataObj.append("phone", clientData.phone);
     formDataObj.append("email", clientData.email);
@@ -364,7 +363,6 @@ export default function Cennik() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-0 sm:ml-11">
-                  {/* Moduły w gridzie z poprawionymi dymkami */}
                   <div onClick={() => toggleAddon("copywriting")} className={`cursor-pointer p-5 rounded-2xl border transition-all ${addons.copywriting ? "bg-blue-600/10 border-blue-500" : "bg-slate-900/50 border-slate-800 hover:border-slate-600"}`}>
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex items-center">
@@ -592,7 +590,7 @@ export default function Cennik() {
               </div>
             </Reveal>
 
-            {/* PODSUMOWANIE (STICKY BAR LUB BOX) */}
+            {/* PODSUMOWANIE */}
             <Reveal delay={400}>
               <div className="ml-0 sm:ml-11 p-8 rounded-3xl bg-gradient-to-r from-blue-900/40 via-slate-900 to-slate-900 border border-blue-500/50 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_10px_40px_rgba(59,130,246,0.15)] relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-3xl rounded-full"></div>
@@ -619,7 +617,6 @@ export default function Cennik() {
                 </div>
 
                 <div className="w-full md:w-auto relative z-10 shrink-0">
-                  {/* Przycisk otwierający Modal Zamówienia */}
                   <button onClick={() => setIsCheckoutOpen(true)} className="block w-full text-center px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(59,130,246,0.6)]">
                     Zamawiam tę wycenę
                   </button>
