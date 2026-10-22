@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "twojanowastrona24.pl - Nowoczesne strony internetowe premium",
     description: "Projektujemy ultraszybkie i konwersyjne strony www. Zobacz nasz cennik i zamów darmowy audyt obecnej strony!",
     url: "https://twojanowastrona24.pl",
-    siteName: "twojanowastrona.pl",
+    siteName: "twojanowastrona24.pl",
     images: [
       {
         // Ten obrazek wyświetli się, gdy wyślesz komuś link na FB lub Messengerze.

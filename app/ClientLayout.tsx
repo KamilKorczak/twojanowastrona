@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useState, useEffect } from "react";import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 // Współdzielone komponenty wizualne dla Layoutu
@@ -22,9 +21,23 @@ const HoverLetters = ({ text, className = "" }: { text: string, className?: stri
 };
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
-  const [cookieAccepted, setCookieAccepted] = useState(false);
+  const [cookieAccepted, setCookieAccepted] = useState(true); // Domyślnie ukrywamy na start, dopóki nie sprawdzimy pamięci
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  // Sprawdzamy przy pierwszym załadowaniu strony, czy użytkownik już wcześniej kliknął akceptację
+  useEffect(() => {
+    const hasAccepted = localStorage.getItem("cookie_accepted");
+    if (!hasAccepted) {
+      setCookieAccepted(false); // Jeśli nie klikał, pokazujemy baner
+    }
+  }, []);
+
+  // Funkcja wywoływana po kliknięciu przycisku
+  const handleAcceptCookies = () => {
+    localStorage.setItem("cookie_accepted", "true"); // Zapisujemy w pamięci przeglądarki na stałe
+    setCookieAccepted(true); // Ukrywamy baner
+  };
 
   return (
     <>
@@ -49,7 +62,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             <Link className="text-xl font-bold tracking-tight text-white transition-colors duration-300 group flex" href="/">
               <HoverLetters text="twoja" />
               <span className="text-blue-500 font-light group-hover:text-blue-400 transition-colors">nowa</span>
-              <HoverLetters text="strona.pl" />
+              <HoverLetters text="strona24.pl" />
             </Link>
 
             {/* Nawigacja Desktopowa */}
@@ -170,7 +183,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             </p>
             <div className="flex items-center gap-3 shrink-0">
               <button 
-                onClick={() => setCookieAccepted(true)}
+                onClick={handleAcceptCookies}
                 className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-xl transition-all shadow-lg hover:-translate-y-0.5 whitespace-nowrap"
               >
                 Akceptuję i zamykam
