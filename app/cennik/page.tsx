@@ -55,6 +55,7 @@ const HoverLetters = ({ text, className = "" }: { text: string, className?: stri
 // --- INTELIGENTNY KOMPONENT OPISU (TOOLTIP) ---
 const InfoTooltip = ({ title, description, align = "center" }: { title: string, description: string, align?: "left" | "center" | "right" }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [tooltipTop, setTooltipTop] = useState(0);
   
   // Klasy dla wersji desktopowej (z prefiksem sm:)
   let desktopPosition = "sm:left-1/2 sm:-translate-x-1/2";
@@ -76,6 +77,13 @@ const InfoTooltip = ({ title, description, align = "center" }: { title: string, 
         onMouseLeave={() => setIsOpen(false)}
         onClick={(e) => {
           e.stopPropagation(); // Zapobiega propagacji kliknięcia
+          
+          // Pobranie dokładnej pozycji przycisku na ekranie dla wersji mobilnej
+          if (!isOpen) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            setTooltipTop(rect.bottom + 8); // +8px dla lekkiego odstępu pod przyciskiem
+          }
+          
           setIsOpen(!isOpen);
         }}
         className="w-5 h-5 rounded-full bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center text-xs hover:bg-blue-600 hover:text-white transition-colors focus:outline-none z-20 relative"
@@ -95,13 +103,16 @@ const InfoTooltip = ({ title, description, align = "center" }: { title: string, 
             aria-hidden="true"
           ></div>
 
-          <div className={`
-            z-[100] p-4 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-2xl shadow-2xl text-left leading-relaxed
-            /* WERSJA MOBILNA: sprawdzona, bezpieczna pozycja na dole ekranu, zero ucinania */
-            fixed bottom-16 left-1/2 -translate-x-1/2 w-[90vw] max-w-sm
-            /* WERSJA DESKTOP: powrót do absolute i pozycji nad ikoną */
-            sm:top-auto sm:left-auto sm:translate-x-0 sm:translate-y-0 sm:absolute sm:bottom-full sm:mb-2 sm:w-64 ${desktopPosition}
-          `}>
+          <div 
+            className={`
+              z-[100] p-4 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-2xl shadow-2xl text-left leading-relaxed
+              /* WERSJA MOBILNA: fixed, centrowana względem ekranu, pozycja top ze zmiennej CSS */
+              fixed left-0 right-0 mx-auto w-[90vw] max-w-sm top-[var(--mobile-top)]
+              /* WERSJA DESKTOP: powrót do absolute i pozycji nad ikoną */
+              sm:top-auto sm:left-auto sm:translate-x-0 sm:translate-y-0 sm:absolute sm:bottom-full sm:mb-2 sm:w-64 ${desktopPosition}
+            `}
+            style={{ "--mobile-top": `${tooltipTop}px` } as React.CSSProperties}
+          >
             <strong className="block text-white mb-1 text-sm">{title}</strong>
             {description}
             
