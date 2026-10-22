@@ -5,13 +5,13 @@ import ChatWidget from "./components/ChatWidget"; // Nasz nowy import bota AI
 
 // To jest serce SEO Twojej strony. Google czyta ten fragment jako pierwszy!
 export const metadata: Metadata = {
-  title: "twojanowastrona.pl - Nowoczesne strony internetowe premium",
+  title: "twojanowastrona24.pl - Nowoczesne strony internetowe premium",
   description: "Projektujemy ultraszybkie, zoptymalizowane strony internetowe dla małych i średnich firm. Zdobądź nowoczesny wizerunek i zamień odwiedzających w realnych klientów. Zamów darmowy projekt wstępny!",
   keywords: "strony internetowe, tworzenie stron www, strony dla firm, nowoczesne strony internetowe, web design",
   openGraph: {
-    title: "twojanowastrona.pl - Nowoczesne strony internetowe premium",
+    title: "twojanowastrona24.pl - Nowoczesne strony internetowe premium",
     description: "Projektujemy ultraszybkie i konwersyjne strony www. Zobacz nasz cennik i zamów darmowy audyt obecnej strony!",
-    url: "https://twojanowastrona.pl",
+    url: "https://twojanowastrona24.pl",
     siteName: "twojanowastrona.pl",
     images: [
       {
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
         width: 1200,
         height: 630,
-        alt: "twojanowastrona.pl - Podgląd strony",
+        alt: "twojanowastrona24.pl - Podgląd strony",
       },
     ],
     locale: "pl_PL",

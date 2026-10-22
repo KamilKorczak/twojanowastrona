@@ -157,7 +157,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-6 border-t border-slate-800/60 pt-6 text-center text-xs text-slate-600">
-          2026 twojanowastrona.pl. Wszelkie prawa zastrzeżone. Projekt i realizacja: Kamil Korczak.
+          2026 twojanowastrona24.pl. Wszelkie prawa zastrzeżone. Projekt i realizacja: Kamil Korczak.
         </div>
       </footer>
 

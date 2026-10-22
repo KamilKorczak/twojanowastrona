@@ -13,7 +13,7 @@ export default function ChatWidget() {
   
   // POPRAWIONE: Jedna czysta definicja powitania
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Cześć, jestem wirtualnym asystentem agencji twojanowastrona.pl. W czym mogę Ci dzisiaj pomóc?" }
+    { role: "assistant", content: "Cześć, jestem wirtualnym asystentem agencji twojanowastrona24.pl. W czym mogę Ci dzisiaj pomóc?" }
   ]);
   
   const [isLoading, setIsLoading] = useState(false);
@@ -117,7 +117,7 @@ export default function ChatWidget() {
               </div>
               <div>
                 <h3 style={{ color: "#ffffff", margin: 0, fontSize: "14px", fontWeight: "bold" }}>Asystent AI</h3>
-                <p style={{ color: "#94a3b8", margin: 0, fontSize: "11px" }}>twojanowastrona.pl</p>
+                <p style={{ color: "#94a3b8", margin: 0, fontSize: "11px" }}>twojanowastrona24.pl</p>
               </div>
             </div>
             <button onClick={() => setIsOpen(false)} style={{ background: "none", border: "none", color: "#94a3b8", cursor: "pointer", padding: "4px" }}>

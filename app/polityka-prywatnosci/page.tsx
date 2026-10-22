@@ -32,7 +32,7 @@ export default function PolitykaPrywatnosci() {
           <div className="text-center mb-16">
             <h1 className="text-3xl sm:text-5xl font-bold mb-6 text-white tracking-tight">Polityka Prywatności i <span className="text-blue-400">Cookies</span></h1>
             <p className="text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              Poniższy dokument określa zasady przetwarzania i ochrony danych osobowych przekazanych przez Użytkowników w związku z korzystaniem z usług serwisu twojanowastrona.pl.
+              Poniższy dokument określa zasady przetwarzania i ochrony danych osobowych przekazanych przez Użytkowników w związku z korzystaniem z usług serwisu twojanowastrona24.pl.
             </p>
           </div>
         </Reveal>
@@ -45,7 +45,7 @@ export default function PolitykaPrywatnosci() {
                 <span className="text-blue-500">§1.</span> Postanowienia Ogólne
               </h2>
               <ul className="list-disc pl-5 space-y-2 text-sm text-slate-400">
-                <li>Administratorem Twoich danych osobowych zbieranych za pośrednictwem strony internetowej twojanowastrona.pl jest Kamil Korczak (zwany dalej "Administratorem").</li>
+                <li>Administratorem Twoich danych osobowych zbieranych za pośrednictwem strony internetowej twojanowastrona24.pl jest Kamil Korczak (zwany dalej "Administratorem").</li>
                 <li>Z Administratorem można skontaktować się pisząc na adres e-mail: <a href="mailto:twojanowastrona24@gmail.com" className="text-blue-400 hover:underline">twojanowastrona24@gmail.com</a> lub telefonicznie pod numerem: 518 496 254.</li>
                 <li>Dane osobowe przetwarzane są zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. (RODO).</li>
                 <li>Administrator dokłada szczególnej staranności w celu ochrony interesów osób, których dane dotyczą, a w szczególności zapewnia, że dane są przetwarzane zgodnie z prawem.</li>
@@ -93,7 +93,7 @@ export default function PolitykaPrywatnosci() {
                 <span className="text-blue-500">§5.</span> Polityka Plików Cookies (Ciasteczka)
               </h2>
               <ul className="list-disc pl-5 space-y-2 text-sm text-slate-400">
-                <li>Strona twojanowastrona.pl używa plików cookies. Są to niewielkie pliki tekstowe wysyłane przez serwer www i przechowywane przez oprogramowanie komputera przeglądarki.</li>
+                <li>Strona twojanowastrona24.pl używa plików cookies. Są to niewielkie pliki tekstowe wysyłane przez serwer www i przechowywane przez oprogramowanie komputera przeglądarki.</li>
                 <li>Gromadzimy informacje dotyczące adresu IP, typu przeglądarki, języka, systemu operacyjnego, dostawcy usług internetowych oraz informacji o czasie i dacie.</li>
                 <li>Zebrane dane służą do monitorowania i sprawdzania, w jaki sposób użytkownicy korzystają z naszych witryn, aby usprawniać funkcjonowanie serwisu zapewniając bardziej efektywną nawigację.</li>
                 <li>Użytkownik w każdej chwili ma możliwość wyłączenia lub przywrócenia opcji gromadzenia cookies poprzez zmianę ustawień w przeglądarce internetowej.</li>

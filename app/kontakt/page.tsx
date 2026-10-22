@@ -58,7 +58,7 @@ export default function Kontakt() {
 
     const formDataObj = new FormData(e.currentTarget);
     formDataObj.append("access_key", "e44f0f1b-bc96-41d4-9a5b-e08af7ec7f0f");
-    formDataObj.append("temat", "Nowa wiadomość z zakładki KONTAKT - twojanowastrona.pl");
+    formDataObj.append("temat", "Nowa wiadomość z zakładki KONTAKT - twojanowastrona24.pl");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {

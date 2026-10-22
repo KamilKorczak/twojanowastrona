@@ -401,7 +401,7 @@ export default function Home() {
                 <div className="absolute -right-10 -top-10 w-32 h-32 bg-blue-600/20 rounded-full blur-2xl"></div>
                 <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
                   <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                  twojanowastrona.pl
+                  twojanowastrona24.pl
                 </h3>
                 <ul className="space-y-6 text-sm text-slate-200">
                   <li className="flex items-start gap-4 group">

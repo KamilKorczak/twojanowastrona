@@ -46,7 +46,7 @@ export default function Regulamin() {
               </h2>
               <ul className="list-disc pl-5 space-y-2 text-sm text-slate-400">
                 <li>Niniejszy regulamin określa zasady świadczenia usług drogą elektroniczną oraz zasady współpracy pomiędzy Wykonawcą a Zamawiającym.</li>
-                <li>Wykonawcą usług w ramach strony twojanowastrona.pl jest Kamil Korczak, wykonujący zlecenia w ramach działalności nierejestrowanej zgodnie z ustawą Prawo Przedsiębiorców (art. 5 ust. 1).</li>
+                <li>Wykonawcą usług w ramach strony twojanowastrona24.pl jest Kamil Korczak, wykonujący zlecenia w ramach działalności nierejestrowanej zgodnie z ustawą Prawo Przedsiębiorców (art. 5 ust. 1).</li>
                 <li>Kontakt z Wykonawcą odbywa się drogą mailową (twojanowastrona24@gmail.com) lub telefoniczną (518 496 254).</li>
               </ul>
             </div>
@@ -79,7 +79,7 @@ export default function Regulamin() {
               <ul className="list-disc pl-5 space-y-2 text-sm text-slate-400">
                 <li>Do momentu uregulowania pełnej kwoty za zlecenie, autorskie prawa majątkowe do stworzonej witryny, kodu oraz projektów graficznych pozostają własnością Wykonawcy.</li>
                 <li><strong>Z chwilą zaksięgowania całkowitej kwoty</strong> za wykonaną usługę, Wykonawca przekazuje Zamawiającemu 100% praw majątkowych do strony, co czyni go wyłącznym właścicielem kodu oraz użytych materiałów docelowych.</li>
-                <li>Wykonawca zastrzega sobie prawo do umieszczenia w stopce zrealizowanej strony drobnej informacji o autorstwie (np. "Projekt i realizacja: twojanowastrona.pl") oraz umieszczenia projektu w swoim portfolio, chyba że strony ustalą inaczej.</li>
+                <li>Wykonawca zastrzega sobie prawo do umieszczenia w stopce zrealizowanej strony drobnej informacji o autorstwie (np. "Projekt i realizacja: twojanowastrona24.pl") oraz umieszczenia projektu w swoim portfolio, chyba że strony ustalą inaczej.</li>
               </ul>
             </div>
 
