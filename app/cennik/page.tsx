@@ -97,10 +97,10 @@ const InfoTooltip = ({ title, description, align = "center" }: { title: string, 
 
           <div className={`
             z-[100] p-4 bg-slate-800 border border-slate-700 text-xs text-slate-300 rounded-2xl shadow-2xl text-left leading-relaxed
-            /* WERSJA MOBILNA: dokładnie pod klikniętym pytajnikiem w pionie, ale wyśrodkowane w poziomie ekranu, więc nigdy nie ucięte */
-            absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[85vw] max-w-xs
-            /* WERSJA DESKTOP: powrót do absolute i pozycji nad ikoną */
-            sm:top-auto sm:bottom-full sm:mb-2 sm:w-64 ${desktopPosition}
+            /* WERSJA MOBILNA: eleganckie okienko na dole ekranu telefonu, zero szans na ucięcie */
+            fixed bottom-12 left-1/2 -translate-x-1/2 w-[90vw] max-w-sm
+            /* WERSJA DESKTOP: powrót do absolute i pozycji nad ikoną, komputer bez zmian */
+            sm:fixed-none sm:absolute sm:bottom-full sm:mb-2 sm:w-64 ${desktopPosition}
           `}>
             <strong className="block text-white mb-1 text-sm">{title}</strong>
             {description}
