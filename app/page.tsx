@@ -165,7 +165,7 @@ export default function Home() {
   ];
 
   const testimonials = [
-    { name: "Tomasz", company: "Warsztat", text: "Szybko, konkretnie i na temat. Strona w końcu normalnie ładuje się na telefonach, a klienci dzwonią z map. Polecam współpracę." },
+    { name: "Tomasz", company: "Warsztat samochodowy", text: "Szybko, konkretnie i na temat. Strona w końcu normalnie ładuje się na telefonach, a klienci dzwonią z map. Polecam współpracę." },
     { name: "Anna", company: "Salon Beauty SPA", text: "Bałam się skomplikowanych umów, ale tutaj wszystko było jasne. Świetny kontakt i piękny, nowoczesny design, który chwalą klientki." },
     { name: "Marek", company: "Usługi Remontowe", text: "Agencje chciały ode mnie gigantycznych kwot. Tu dostałem profesjonalną wizytówkę w około 7 dni. Zdecydowanie warto." },
     { name: "Karolina", company: "Biuro Rachunkowe", text: "Pełen profesjonalizm. Wstępny projekt strony dostałam bardzo szybko, a po moich uwagach od razu i bez problemu wprowadzono zmiany." },
