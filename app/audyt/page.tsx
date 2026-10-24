@@ -83,7 +83,7 @@ const TypewriterEffect = ({ words }: { words: string[] }) => {
 export default function Audyt() {
   const [formData, setFormData] = useState({ 
     url: "", 
-    problems: [] as string[], // Zmieniono na tablicę, aby obsługiwać wielokrotny wybór
+    problems: [] as string[], 
     contactPreference: "email",
     email: "", 
     phone: "" 
@@ -98,23 +98,29 @@ export default function Audyt() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // --- OBSŁUGA WYSYŁKI PRZEZ WEB3FORMS ---
+  // --- OBSŁUGA WYSYŁKI PRZEZ WEB3FORMS (WERSJA JSON) ---
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("Wysyłanie zgłoszenia na audyt...");
 
-    const formDataObj = new FormData(e.currentTarget);
-    formDataObj.append("access_key", "e44f0f1b-bc96-41d4-9a5b-e08af7ec7f0f");
-    formDataObj.append("temat", "Nowe zlecenie darmowego audytu z twojanowastrona24.pl");
-    
-    // Zbieramy wszystkie zaznaczone problemy w jeden czytelny ciąg tekstowy dla maila
-    formDataObj.delete("glowny_problem"); // Usuwamy domyślne zachowanie formularza HTML
-    formDataObj.append("Zgłoszone problemy", formData.problems.length > 0 ? formData.problems.join(", ") : "Brak zaznaczonych");
+    const payload = {
+      access_key: "e44f0f1b-bc96-41d4-9a5b-e08af7ec7f0f", 
+      subject: "Nowe zlecenie darmowego audytu z twojanowastrona24.pl", 
+      Strona_WWW: formData.url,
+      Zgloszone_problemy: formData.problems.length > 0 ? formData.problems.join(", ") : "Brak zaznaczonych",
+      Preferowany_kontakt: formData.contactPreference === "email" ? "E-mail" : "Telefon",
+      Telefon_klienta: formData.phone || "Nie podano",
+      email: formData.email || "brak-emaila@strona.pl"
+    };
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formDataObj
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(payload)
       });
 
       const data = await response.json();
@@ -122,7 +128,6 @@ export default function Audyt() {
       if (data.success) {
         setStatus("Analiza zlecona! Skontaktujemy się z Tobą najszybciej jak to możliwe.");
         setFormData({ url: "", problems: [], contactPreference: "email", email: "", phone: "" });
-        (e.target as HTMLFormElement).reset();
       } else {
         setStatus("Wystąpił błąd podczas wysyłania. Spróbuj ponownie za chwilę.");
       }
@@ -133,7 +138,7 @@ export default function Audyt() {
 
   return (
     <div className="relative w-full overflow-hidden flex flex-col items-center pt-24 pb-32">
-      {/* Tło Parallax Premium */}
+      {/* Tło Parallax Premium - POPRAWIONY BŁĄD SKŁADNI */}
       <div 
         className="absolute inset-0 z-0 opacity-[0.15] bg-cover bg-center"
         style={{ 
@@ -151,11 +156,9 @@ export default function Audyt() {
           </div>
           
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6 text-white drop-shadow-lg flex flex-col items-center justify-center">
-            {/* Wersja Desktop (animowane litery) */}
             <div className="hidden sm:block">
               <HoverLetters text="Dlaczego twoja strona" />
             </div>
-            {/* Wersja Mobile (czysty, wyśrodkowany tekst chroniący przed cięciem słów) */}
             <div className="sm:hidden block text-center leading-tight">
               Dlaczego Twoja strona
             </div>
@@ -175,7 +178,6 @@ export default function Audyt() {
           </p>
         </Reveal>
 
-        {/* QUIZ / Formularz połączony z Web3Forms */}
         <Reveal delay={200}>
           <div className="bg-gradient-to-br from-slate-900 to-[#0B0F19] border border-slate-800 rounded-3xl p-8 sm:p-12 text-left shadow-2xl relative overflow-hidden group hover:border-slate-700 transition-colors">
             <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-3xl pointer-events-none group-hover:opacity-100 opacity-50 transition-opacity duration-700"></div>
@@ -199,7 +201,7 @@ export default function Audyt() {
                 />
               </div>
 
-              {/* Krok 2 (Checkboxy do wyboru wielu opcji) */}
+              {/* Krok 2 */}
               <div className="pt-8 border-t border-slate-800/50">
                 <div className="mb-4">
                   <h3 className="text-xl font-bold text-white flex items-center gap-3">
@@ -223,7 +225,6 @@ export default function Audyt() {
                       <label key={idx} className={`cursor-pointer px-4 py-3.5 rounded-xl border transition-all text-sm flex items-center gap-3 ${isSelected ? "bg-blue-600/20 border-blue-500 text-white" : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-600"}`}>
                         <input 
                           type="checkbox" 
-                          name="glowny_problem" 
                           value={prob} 
                           checked={isSelected} 
                           onChange={(e) => {
@@ -235,7 +236,6 @@ export default function Audyt() {
                           }} 
                           className="hidden" 
                         />
-                        {/* Zmieniony wygląd na kwadratowy checkbox */}
                         <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${isSelected ? "border-blue-500 bg-blue-500" : "border-slate-600 bg-slate-900"}`}>
                           {isSelected && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
                         </div>
@@ -246,7 +246,7 @@ export default function Audyt() {
                 </div>
               </div>
 
-              {/* Krok 3 - Wpisanie danych i ZAZNACZENIE PREFERENCJI */}
+              {/* Krok 3 */}
               <div className="pt-8 border-t border-slate-800/50">
                 <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
                   <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm shadow-lg shadow-blue-600/30">3</span>
@@ -258,7 +258,6 @@ export default function Audyt() {
                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Twój E-mail</label>
                     <input 
                       type="email" 
-                      name="adres_email"
                       required={formData.contactPreference === "email"} 
                       value={formData.email} 
                       onChange={(e) => setFormData({...formData, email: e.target.value})} 
@@ -270,7 +269,6 @@ export default function Audyt() {
                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Twój Telefon</label>
                     <input 
                       type="tel" 
-                      name="numer_telefonu"
                       required={formData.contactPreference === "phone"} 
                       value={formData.phone} 
                       onChange={(e) => setFormData({...formData, phone: e.target.value})} 
@@ -288,7 +286,6 @@ export default function Audyt() {
                     <label className={`cursor-pointer flex-1 py-3 px-4 rounded-xl border text-center font-medium text-sm transition-all flex items-center justify-center gap-3 ${formData.contactPreference === 'email' ? "bg-blue-600/20 border-blue-500 text-white" : "bg-[#0B0F19] border-slate-700 text-slate-500 hover:border-slate-500"}`}>
                       <input 
                         type="radio" 
-                        name="preferowany_kontakt" 
                         value="email" 
                         checked={formData.contactPreference === "email"} 
                         onChange={(e) => setFormData({...formData, contactPreference: e.target.value})} 
@@ -302,7 +299,6 @@ export default function Audyt() {
                     <label className={`cursor-pointer flex-1 py-3 px-4 rounded-xl border text-center font-medium text-sm transition-all flex items-center justify-center gap-3 ${formData.contactPreference === 'phone' ? "bg-blue-600/20 border-blue-500 text-white" : "bg-[#0B0F19] border-slate-700 text-slate-500 hover:border-slate-500"}`}>
                       <input 
                         type="radio" 
-                        name="preferowany_kontakt" 
                         value="phone" 
                         checked={formData.contactPreference === "phone"} 
                         onChange={(e) => setFormData({...formData, contactPreference: e.target.value})} 
@@ -315,7 +311,6 @@ export default function Audyt() {
                     </label>
                   </div>
                 </div>
-
               </div>
 
               <button type="submit" className="w-full py-5 bg-blue-600 hover:bg-blue-500 text-white text-base font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:-translate-y-1 mt-6">
