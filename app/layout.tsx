@@ -1,24 +1,21 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
-import ChatWidget from "./components/ChatWidget"; // Nasz nowy import bota AI
+import ChatWidget from "./components/ChatWidget";
 
-// To jest serce SEO Twojej strony. Google czyta ten fragment jako pierwszy!
 export const metadata: Metadata = {
-  title: "twojanowastrona24.pl - Nowoczesne strony internetowe premium",
-  description: "Projektujemy ultraszybkie, zoptymalizowane strony internetowe dla małych i średnich firm. Zdobądź nowoczesny wizerunek i zamień odwiedzających w realnych klientów. Zamów darmowy projekt wstępny!",
-  keywords: "strony internetowe, tworzenie stron www, strony dla firm, nowoczesne strony internetowe, web design",
+  title: "twojanowastrona24.pl - Nowoczesne strony WWW, Boty AI i Rezerwacje",
+  description: "Projektujemy i wdrażamy nowoczesne strony WWW, systemy rezerwacji oraz boty AI dla firm. Zdobądź przewagę na rynku. Odbierz darmowy projekt próbny Twojej nowej witryny!",
+  keywords: "strony internetowe, tworzenie stron www, strony dla firm, nowoczesne strony internetowe, boty AI, systemy rezerwacji",
   openGraph: {
-    title: "twojanowastrona24.pl - Nowoczesne strony internetowe premium",
-    description: "Projektujemy ultraszybkie i konwersyjne strony www. Zobacz nasz cennik i zamów darmowy audyt obecnej strony!",
+    title: "twojanowastrona24.pl - Nowoczesne strony WWW i Boty AI",
+    description: "Projektujemy ultraszybkie i konwersyjne strony www. Zobacz naszą ofertę i zamów darmowy projekt próbny!",
     url: "https://twojanowastrona24.pl",
     siteName: "twojanowastrona24.pl",
     images: [
       {
-        // Ten obrazek wyświetli się, gdy wyślesz komuś link na FB lub Messengerze.
-        // Poniżej wstawiłem eleganckie biurowe zdjęcie Premium, ale w przyszłości 
-        // możesz tu podmienić URL na obrazek swojego własnego logo!
-        url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+        // Ścieżka do Twojego własnego obrazka w folderze public
+        url: "https://twojanowastrona24.pl/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "twojanowastrona24.pl - Podgląd strony",
@@ -37,16 +34,13 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <head>
-        {/* Favicon - Ikona widoczna w zakładce przeglądarki */}
-        <link rel="icon" href="https://fav.farm/💻" />
+        {/* Usunięto sztywny link do ikony. Next.js sam zaciągnie plik icon.png */}
       </head>
       <body className="min-h-screen bg-[#0B0F19] text-slate-300 font-sans antialiased selection:bg-blue-500 selection:text-white overflow-x-hidden flex flex-col">
-        {/* Tu wstawiamy nasze opakowanie, które zawiera Menu i Stopkę z pliku ClientLayout.tsx */}
         <ClientLayout>
           {children}
         </ClientLayout>
 
-        {/* Pływający wirtualny asystent AI - działa na każdej podstronie */}
         <ChatWidget />
       </body>
     </html>
